@@ -1,8 +1,10 @@
 import com.apple.foundationdb.Database;
 import com.apple.foundationdb.FDB;
+import com.apple.foundationdb.ReadTransactionContext;
 import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
+import com.apple.foundationdb.subspace.Subspace;
 
 import java.util.HashMap;
 
@@ -33,6 +35,7 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
+//    else, table can be created:
     else{
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
@@ -54,9 +57,10 @@ public class TableManagerImpl implements TableManager{
       }
       System.out.println("Created root directory successfully!");
 //    now can create table:
-      DirectorySubspace dir = null;
-      dir = DirectoryLayer.getDefault().createOrOpen(db,PathUtil.from(tableName)).join();
-      if(DirectoryLayer.DEFAULT_NODE_SUBSPACE.contains(tableName.getBytes())){
+      DirectorySubspace subdir = null;
+      subdir = DirectoryLayer.getDefault().create(db,PathUtil.from(tableName)).join();
+      ReadTransactionContext tc;
+      if(DirectoryLayer.getDefault().list() == subdir){
         System.out.println("table exists");
       }
     }
