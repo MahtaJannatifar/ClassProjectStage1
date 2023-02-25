@@ -10,6 +10,8 @@ public class TableManagerImpl implements TableManager{
   public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType,
                          String[] primaryKeyAttributeNames) {
     // your code
+
+    System.out.println("blabla");
     return StatusCode.SUCCESS;
   }
 
