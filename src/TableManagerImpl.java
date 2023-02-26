@@ -1,12 +1,12 @@
 import com.apple.foundationdb.Database;
 import com.apple.foundationdb.FDB;
-import com.apple.foundationdb.ReadTransactionContext;
 import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
 import com.apple.foundationdb.subspace.Subspace;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * TableManagerImpl implements interfaces in {#TableManager}. You should put your implementation
@@ -35,7 +35,6 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
-//    else, table can be created:
     else{
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
@@ -59,8 +58,7 @@ public class TableManagerImpl implements TableManager{
 //    now can create table:
       DirectorySubspace subdir = null;
       subdir = DirectoryLayer.getDefault().create(db,PathUtil.from(tableName)).join();
-      ReadTransactionContext tc;
-      if(DirectoryLayer.getDefault().list() == subdir){
+      if(Objects.equals(DirectoryLayer.getDefault().list(db), subdir)){
         System.out.println("table exists");
       }
     }
