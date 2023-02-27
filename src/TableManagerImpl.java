@@ -1,12 +1,12 @@
 import com.apple.foundationdb.Database;
 import com.apple.foundationdb.FDB;
+import com.apple.foundationdb.Transaction;
 import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
 import com.apple.foundationdb.subspace.Subspace;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * TableManagerImpl implements interfaces in {#TableManager}. You should put your implementation
@@ -55,12 +55,15 @@ public class TableManagerImpl implements TableManager{
         System.out.println("ERROR: the root directory is not successfully opened: " + e);
       }
       System.out.println("Created root directory successfully!");
-//    now can create table:
-      DirectorySubspace subdir = null;
-      subdir = DirectoryLayer.getDefault().create(db,PathUtil.from(tableName)).join();
-      if(Objects.equals(DirectoryLayer.getDefault().list(db), subdir)){
-        System.out.println("table exists");
+      // if the sub directory does not exist, add it
+      // initialize two subdirectories under the company, Employee and Department
+      final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
+      Transaction tx = db.createTransaction();
+      if(subdir == DirectoryLayer.getDefault().list(tx).join()) {
+
+        System.out.println("Create sub directory successfully!");
       }
+
     }
 
     return StatusCode.SUCCESS;
