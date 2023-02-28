@@ -24,10 +24,10 @@ public class TableManagerImpl implements TableManager{
       return StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
     }
     else if(attributeNames == null){
-      return  StatusCode.TABLE_CREATION_ATTRIBUTE_NAME_INVALID;
+      return  StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
     }
     else if(attributeType == null){
-      return  StatusCode.TABLE_CREATION_ATTRIBUTE_NAME_INVALID;
+      return  StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
     }
     else if(primaryKeyAttributeNames == null){
       return  StatusCode.TABLE_CREATION_NO_PRIMARY_KEY;
