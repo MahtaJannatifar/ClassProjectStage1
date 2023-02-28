@@ -19,7 +19,7 @@ public class TableManagerImpl implements TableManager{
                          String[] primaryKeyAttributeNames) {
     // your code
 
-    System.out.println("ffb");
+    System.out.println("----");
     if(tableName == null){
       return StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
     }
