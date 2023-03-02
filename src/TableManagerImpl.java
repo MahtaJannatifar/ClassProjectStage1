@@ -72,16 +72,17 @@ public class TableManagerImpl implements TableManager{
       Transaction tx = db.createTransaction();
       System.out.println("DirectoryLayer.getDefault().list(tx).join(): " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
-        System.out.println("name: "+ tableName);
         System.out.println("table already exists");
-        return StatusCode.SUCCESS;
+        return StatusCode.TABLE_ALREADY_EXISTS;
       }
       else{
         System.out.println("does not exist");
         //need to add the table to fdb:
+
         for (int i=0; i< DirectoryLayer.getDefault().list(tx).join().size(); i++) {
+          String pk = primaryKeyAttributeNames[i];
           Transaction insertionTx = db.createTransaction();
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i], "hello");
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i], pk);
 
           System.out.println("inserted subdir is " + subdir);
           if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
