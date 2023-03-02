@@ -56,7 +56,7 @@ public class TableManagerImpl implements TableManager{
         System.out.println("ERROR: the database is not successfully opened: " + e);
       }
 
-      System.out.println("Open FDB Successfully!");
+//      System.out.println("Open FDB Successfully!");
       // initialize root directory, which stands for the Company
       try {
         rootDirectory = DirectoryLayer.getDefault().createOrOpen(db,
@@ -64,15 +64,15 @@ public class TableManagerImpl implements TableManager{
       } catch (Exception e) {
         System.out.println("ERROR: the root directory is not successfully opened: " + e);
       }
-      System.out.println("Created root directory successfully!");
+//      System.out.println("Created root directory successfully!");
       // if the subdirectory does not exist, add it
       // initialize two subdirectories under the company, Employee and Department
       final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
 
-      System.out.println("DirectoryLayer: " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
+//      System.out.println("DirectoryLayer: " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
-        System.out.println("table already exists");
+        System.out.println(tableName+"  already exists,cannot create a table with existing name!");
         return StatusCode.TABLE_ALREADY_EXISTS;
       }
       else{
