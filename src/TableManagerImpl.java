@@ -43,6 +43,9 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
+    else if(primaryKeyAttributeNames.length == 0 ){
+      return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+    }
     else{
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
