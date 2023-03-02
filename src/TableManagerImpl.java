@@ -84,6 +84,7 @@ public class TableManagerImpl implements TableManager{
         //need to add the table to fdb:
         for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
           final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
+          System.out.println("---subdir --- "+ subdir);
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
           System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
 
