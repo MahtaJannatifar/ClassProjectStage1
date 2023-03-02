@@ -105,6 +105,7 @@ public class TableManagerImpl implements TableManager{
 
   @Override
   public HashMap<String, TableMetadata> listTables() {
+    System.out.println("list table was called");
     // your code
     return null;
   }
