@@ -43,9 +43,9 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
-    else if(primaryKeyAttributeNames.length == 0 ){
-      return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
-    }
+//    else if(primaryKeyAttributeNames.length == 0 ){
+//      return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+//    }
     else{
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
@@ -88,14 +88,7 @@ public class TableManagerImpl implements TableManager{
               System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
           }
         }
-//          addAttributeValuePairToTable(insertionTx, employeeTable,
-//                  ssn, Employee.EMPLOYEE_ATTRIBUTE_NAME, e.att());
-//          addAttributeValuePairToTable(insertionTx, employeeTable,
-//                  ssn, Employee.EMPLOYEE_ATTRIBUTE_SALARY, e.getSalary());
-//          addAttributeValuePairToTable(insertionTx, employeeTable,
-//                  ssn, Employee.EMPLOYEE_ATTRIBUTE_DNO, e.getDno());
-//          insertionTx.commit().join();
-//        }
+
 
       }
 
