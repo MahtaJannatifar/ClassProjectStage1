@@ -80,6 +80,10 @@ public class TableManagerImpl implements TableManager{
         //need to add the table to fdb:
         for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
 
+          if(primaryKeyAttributeNames.length==0){
+            System.out.println("PK not fount---");
+            return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+          }
 
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"" );
 
