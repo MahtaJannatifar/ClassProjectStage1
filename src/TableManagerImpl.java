@@ -18,7 +18,6 @@ public class TableManagerImpl implements TableManager{
   public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType,
                          String[] primaryKeyAttributeNames) {
     // your code
-
     System.out.println("----");
     if(tableName == null){
       return StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
@@ -30,7 +29,7 @@ public class TableManagerImpl implements TableManager{
       return  StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
     }
     else if(primaryKeyAttributeNames == null){
-      return  StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+      return  StatusCode.TABLE_CREATION_NO_PRIMARY_KEY;
     }
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
@@ -55,13 +54,16 @@ public class TableManagerImpl implements TableManager{
         System.out.println("ERROR: the root directory is not successfully opened: " + e);
       }
       System.out.println("Created root directory successfully!");
-      // if the sub directory does not exist, add it
+      // if the subdirectory does not exist, add it
       // initialize two subdirectories under the company, Employee and Department
       final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
       if(subdir == DirectoryLayer.getDefault().list(tx).join()) {
 
-        System.out.println("Create sub directory successfully!");
+        System.out.println("exists");
+      }
+      else{
+        System.out.println("does not exist");
       }
 
     }
