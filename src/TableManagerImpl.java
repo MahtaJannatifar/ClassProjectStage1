@@ -25,8 +25,7 @@ public class TableManagerImpl implements TableManager{
   }
 
   @Override
-  public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType,
-                         String[] primaryKeyAttributeNames) {
+  public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType, String[] primaryKeyAttributeNames) {
     // your code
     if(tableName == null){
       return StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
@@ -43,9 +42,9 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
-//    else if(primaryKeyAttributeNames.length == 0 ){
-//      return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
-//    }
+    else if(primaryKeyAttributeNames.length == 0 ){
+      return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+    }
     else{
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
@@ -77,12 +76,12 @@ public class TableManagerImpl implements TableManager{
       }
       else{
         System.out.println("does not exist");
+        Transaction insertionTx = db.createTransaction();
         //need to add the table to fdb:
+        for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
 
-        for (int i=0; i< DirectoryLayer.getDefault().list(tx).join().size(); i++) {
-          String pk = primaryKeyAttributeNames[i];
-          Transaction insertionTx = db.createTransaction();
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i], pk);
+
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"" );
 
           System.out.println("inserted subdir is " + subdir);
           if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
