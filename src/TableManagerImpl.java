@@ -6,6 +6,7 @@ import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
 import com.apple.foundationdb.subspace.Subspace;
 import com.apple.foundationdb.tuple.Tuple;
+import java.util. HashMap;
 
 import java.util.HashMap;
 
@@ -112,8 +113,12 @@ public class TableManagerImpl implements TableManager{
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
     Transaction tx = db.createTransaction();
-    System.out.println("list table was called" + (HashMap<String, TableMetadata>) DirectoryLayer.getDefault().list(tx).join());
-    return (HashMap<String, TableMetadata>) DirectoryLayer.getDefault().list(tx).join();
+    System.out.println("list table was called");
+    HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
+    TableMetadata tmd = new TableMetadata();
+    List_table.put(DirectoryLayer.getDefault().list(tx).join().toString(), tmd);
+    System.out.println("--- List: "+ List_table);
+    return  List_table;
   }
 
   @Override
