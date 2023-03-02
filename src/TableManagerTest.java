@@ -50,8 +50,7 @@ public class TableManagerTest {
         EmployeeTableAttributeNames, EmployeeTableAttributeTypes, EmployeeTablePKAttributes));
 
     HashMap<String, TableMetadata> tables = tableManager.listTables();
-    System.out.println("table size===> "+tables.size());
-//    assertEquals(1, tables.size());
+    assertEquals(1, tables.size());
 //    assertEquals(EmployeeTable, tables.get(EmployeeTableName));
   }
 
