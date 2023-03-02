@@ -71,7 +71,7 @@ public class TableManagerImpl implements TableManager{
       final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
       System.out.println("DirectoryLayer.getDefault().list(tx).join(): " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
-      if( DirectoryLayer.getDefault().list(tx).join().contains(subdir)) {
+      if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
         System.out.println("name: "+ tableName);
         System.out.println("table already exists");
         return StatusCode.TABLE_ALREADY_EXISTS;
