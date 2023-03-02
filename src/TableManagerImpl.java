@@ -128,6 +128,7 @@ public class TableManagerImpl implements TableManager{
 
   @Override
   public StatusCode dropAllTables() {
+    System.out.println("DROP tables is being called");
     // your code
     FDB fdb = FDB.selectAPIVersion(710);
     Database db = null;
