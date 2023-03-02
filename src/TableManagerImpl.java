@@ -5,6 +5,7 @@ import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
 import com.apple.foundationdb.subspace.Subspace;
+import com.apple.foundationdb.tuple.Tuple;
 
 import java.util.HashMap;
 
@@ -13,6 +14,15 @@ import java.util.HashMap;
  * in this class.
  */
 public class TableManagerImpl implements TableManager{
+  public static void addAttributeValuePairToTable(Transaction tx, DirectorySubspace table, String primaryKey,
+                                                  String attributeName, Object attributeValue) {
+    Tuple keyTuple = new Tuple();
+    keyTuple = keyTuple.add(primaryKey).add(attributeName);
+
+    Tuple valueTuple = new Tuple();
+    valueTuple = valueTuple.addObject(attributeValue);
+    tx.set(table.pack(keyTuple), valueTuple.pack());
+  }
 
   @Override
   public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType,
@@ -59,11 +69,25 @@ public class TableManagerImpl implements TableManager{
       final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
       if(subdir == DirectoryLayer.getDefault().list(tx).join()) {
-
-        System.out.println("exists");
+        System.out.println("name: "+ tableName);
+        System.out.println("table already exists");
+        return StatusCode.TABLE_ALREADY_EXISTS;
       }
       else{
         System.out.println("does not exist");
+        //need to add the table to fdb:
+//        for (e in tableName) {
+          Transaction insertionTx = db.createTransaction();
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], 123);
+//          addAttributeValuePairToTable(insertionTx, employeeTable,
+//                  ssn, Employee.EMPLOYEE_ATTRIBUTE_NAME, e.att());
+//          addAttributeValuePairToTable(insertionTx, employeeTable,
+//                  ssn, Employee.EMPLOYEE_ATTRIBUTE_SALARY, e.getSalary());
+//          addAttributeValuePairToTable(insertionTx, employeeTable,
+//                  ssn, Employee.EMPLOYEE_ATTRIBUTE_DNO, e.getDno());
+//          insertionTx.commit().join();
+//        }
+
       }
 
     }
