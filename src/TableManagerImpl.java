@@ -67,7 +67,7 @@ public class TableManagerImpl implements TableManager{
       System.out.println("Created root directory successfully!");
       // if the subdirectory does not exist, add it
       // initialize two subdirectories under the company, Employee and Department
-      final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
+//      final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
       System.out.println("DirectoryLayer: " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
@@ -83,7 +83,7 @@ public class TableManagerImpl implements TableManager{
         Transaction insertionTx = db.createTransaction();
         //need to add the table to fdb:
         for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
-
+          final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
           System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
 
