@@ -52,6 +52,7 @@ public class TableManagerTest {
     HashMap<String, TableMetadata> tables = tableManager.listTables();
     assertEquals(1, tables.size());
     System.out.println("TABLE META DATA SIZE: " + tables.size());
+//    todo: fix
 //    assertEquals(EmployeeTable, tables.get(EmployeeTableName));
   }
 

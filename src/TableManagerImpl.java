@@ -143,6 +143,9 @@ public class TableManagerImpl implements TableManager{
     for(int i=0; i< listTables().size(); i++){
       listTables().remove(DirectoryLayer.getDefault().list(tx).join().get(i));
     }
+    if(listTables().size() == 0){
+      System.out.println("Table is empty!---");
+    }
 
     return StatusCode.SUCCESS;
   }
