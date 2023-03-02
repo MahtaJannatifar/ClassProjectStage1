@@ -72,6 +72,10 @@ public class TableManagerImpl implements TableManager{
       System.out.println("DirectoryLayer: " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
         System.out.println("table already exists");
+        if(primaryKeyAttributeNames.length == 0){
+          System.out.println("PK not fount---");
+          return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+        }
         return StatusCode.TABLE_ALREADY_EXISTS;
       }
       else{
@@ -80,14 +84,9 @@ public class TableManagerImpl implements TableManager{
         //need to add the table to fdb:
         for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
 
-
-
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"" );
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
           System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
-          if(primaryKeyAttributeNames.length == 0){
-            System.out.println("PK not fount---");
-            return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
-          }
+
           System.out.println("inserted subdir is " + subdir);
           if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
               System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
