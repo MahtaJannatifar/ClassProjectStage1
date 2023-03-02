@@ -82,6 +82,7 @@ public class TableManagerImpl implements TableManager{
           Transaction insertionTx = db.createTransaction();
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], "hello");
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[1],attributeNames[1], "hello2");
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[2],attributeNames[2], "hello3");
 
         System.out.println("inserted subdir is "+subdir);
         if( DirectoryLayer.getDefault().list(tx).join().size() >0) {
