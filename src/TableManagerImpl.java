@@ -86,12 +86,7 @@ public class TableManagerImpl implements TableManager{
           }
         }
         return StatusCode.SUCCESS;
-
       }
-
-
-
-
   }
 
   @Override
