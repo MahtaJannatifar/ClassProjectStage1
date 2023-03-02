@@ -43,6 +43,7 @@ public class TableManagerImpl implements TableManager{
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
     else if(primaryKeyAttributeNames.length == 0 ){
+      System.out.println("NO PRIMARY KEY_______");
       return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
     }
 
@@ -83,10 +84,7 @@ public class TableManagerImpl implements TableManager{
 
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
           System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
-          if(primaryKeyAttributeNames.length == 0){
-            System.out.println("PK not fount---");
-            return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
-          }
+
           System.out.println("inserted subdir is " + subdir);
           if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
               System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
