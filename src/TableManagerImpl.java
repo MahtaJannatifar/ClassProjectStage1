@@ -77,7 +77,7 @@ public class TableManagerImpl implements TableManager{
         return StatusCode.SUCCESS;
       }
       else{
-        System.out.println("does not exist");
+        System.out.println(tableName+"does not exist");
         Transaction insertionTx = db.createTransaction();
         //need to add the table to fdb:
         for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
