@@ -69,17 +69,17 @@ public class TableManagerImpl implements TableManager{
       // initialize two subdirectories under the company, Employee and Department
       final DirectorySubspace subdir = rootDirectory.createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
-      System.out.println("DirectoryLayer.getDefault().list(tx).join(): " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
+      System.out.println("DirectoryLayer: " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
         System.out.println("table already exists");
         return StatusCode.TABLE_ALREADY_EXISTS;
       }
       else{
         System.out.println("does not exist");
-        Transaction insertionTx = db.createTransaction();
-        //need to add the table to fdb:
-        for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
 
+        //need to add the table to fdb:
+        for (int i=0; i< DirectoryLayer.getDefault().list(tx).join().size(); i++) {
+          Transaction insertionTx = db.createTransaction();
           if(primaryKeyAttributeNames.length==0){
             System.out.println("PK not fount---");
             return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
