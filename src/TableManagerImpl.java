@@ -81,7 +81,7 @@ public class TableManagerImpl implements TableManager{
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], 123);
         System.out.println("inserted subdir is "+subdir);
         if( DirectoryLayer.getDefault().list(tx).join().size() >0) {
-          System.out.println("ADDED");
+          System.out.println("size is "+  DirectoryLayer.getDefault().list(tx).join().size());
         }
 //          addAttributeValuePairToTable(insertionTx, employeeTable,
 //                  ssn, Employee.EMPLOYEE_ATTRIBUTE_NAME, e.att());
