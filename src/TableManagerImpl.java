@@ -130,6 +130,20 @@ public class TableManagerImpl implements TableManager{
   @Override
   public StatusCode dropAllTables() {
     // your code
+    FDB fdb = FDB.selectAPIVersion(710);
+    Database db = null;
+    DirectorySubspace rootDirectory = null;
+    try {
+      db = fdb.open();
+    } catch (Exception e) {
+      System.out.println("ERROR: the database is not successfully opened: " + e);
+    }
+    Transaction tx = db.createTransaction();
+    if(listTables().size() > 0){
+      for(int i=0; i< listTables().size(); i++){
+        listTables().remove(DirectoryLayer.getDefault().list(tx).join().get(i));
+      }
+    }
     return StatusCode.SUCCESS;
   }
 }
