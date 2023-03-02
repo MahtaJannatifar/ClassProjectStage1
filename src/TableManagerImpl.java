@@ -76,23 +76,24 @@ public class TableManagerImpl implements TableManager{
         System.out.println(tableName+"  already exists,cannot create a table with existing name!");
         return StatusCode.TABLE_ALREADY_EXISTS;
       }
-      else{
-        System.out.println("does not exist");
-        Transaction insertionTx = db.createTransaction();
-        //need to add the table to fdb:
-        for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
-
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
-          System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
-
-          System.out.println("inserted subdir is " + subdir);
-          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
-              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
-          }
-        }
-        return StatusCode.SUCCESS;
-
-      }
+      return StatusCode.SUCCESS;
+//      else{
+//        System.out.println("does not exist");
+//        Transaction insertionTx = db.createTransaction();
+//        //need to add the table to fdb:
+//        for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
+//
+//          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
+//          System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
+//
+//          System.out.println("inserted subdir is " + subdir);
+//          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
+//              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
+//          }
+//        }
+//        return StatusCode.SUCCESS;
+//
+//      }
 
 
 
