@@ -78,17 +78,16 @@ public class TableManagerImpl implements TableManager{
       else{
         System.out.println("does not exist");
         //need to add the table to fdb:
-//        for (e in tableName) {
+        for (int i=0; i< DirectoryLayer.getDefault().list(tx).join().size(); i++) {
           Transaction insertionTx = db.createTransaction();
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], "hello");
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[1],attributeNames[1], "hello2");
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[2],attributeNames[2], "hello3");
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i], "hello");
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i], "hello2");
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i], "hello3");
 
-        System.out.println("inserted subdir is "+subdir);
-        if( DirectoryLayer.getDefault().list(tx).join().size() >0) {
-         for(int i=0; i<DirectoryLayer.getDefault().list(tx).join().size(); i++){
-           System.out.println("items are "+ DirectoryLayer.getDefault().list(tx).join().get(i));
-         }
+          System.out.println("inserted subdir is " + subdir);
+          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
+              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
+          }
         }
 //          addAttributeValuePairToTable(insertionTx, employeeTable,
 //                  ssn, Employee.EMPLOYEE_ATTRIBUTE_NAME, e.att());
