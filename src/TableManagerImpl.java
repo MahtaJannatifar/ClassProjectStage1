@@ -111,7 +111,6 @@ public class TableManagerImpl implements TableManager{
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
     List_table.put(DirectoryLayer.getDefault().list(tx).join().toString(), tmd);
-    System.out.println("--- List size: "+ List_table.size());
     return  List_table;
   }
 
@@ -140,8 +139,8 @@ public class TableManagerImpl implements TableManager{
     }
     Transaction tx = db.createTransaction();
 
-    for(int i=0; i< listTables().size(); i++){
-      listTables().remove(DirectoryLayer.getDefault().list(tx).join().get(i));
+    for(int i=0; i<listTables().size(); i++){
+      listTables().remove(listTables().get(i));
     }
     if(listTables().size() == 0){
       System.out.println("Table is empty!---");
