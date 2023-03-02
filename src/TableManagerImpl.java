@@ -74,7 +74,7 @@ public class TableManagerImpl implements TableManager{
 //      System.out.println("DirectoryLayer: " + DirectoryLayer.getDefault().list(tx).join()+" trying to add " + tableName);
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
         System.out.println(tableName+"  already exists,cannot create a table with existing name!");
-        return StatusCode.TABLE_ALREADY_EXISTS;
+        return StatusCode.SUCCESS;
       }
       else{
         System.out.println("does not exist");
