@@ -113,11 +113,10 @@ public class TableManagerImpl implements TableManager{
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
     Transaction tx = db.createTransaction();
-    System.out.println("list table was called");
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
     List_table.put(DirectoryLayer.getDefault().list(tx).join().toString(), tmd);
-    System.out.println("--- List: "+ List_table);
+    System.out.println("--- List size: "+ List_table.size());
     return  List_table;
   }
 
