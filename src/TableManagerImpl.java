@@ -45,7 +45,7 @@ public class TableManagerImpl implements TableManager{
     else if(primaryKeyAttributeNames.length == 0 ){
       return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
     }
-    else{
+
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
       DirectorySubspace rootDirectory = null;
@@ -88,13 +88,13 @@ public class TableManagerImpl implements TableManager{
               System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
           }
         }
-
+        return StatusCode.SUCCESS;
 
       }
 
-    }
 
-    return StatusCode.SUCCESS;
+
+
   }
 
   @Override
