@@ -86,7 +86,7 @@ public class TableManagerImpl implements TableManager{
         System.out.println("inserted subdir is "+subdir);
         if( DirectoryLayer.getDefault().list(tx).join().size() >0) {
          for(int i=0; i<DirectoryLayer.getDefault().list(tx).join().size(); i++){
-           System.out.println("items are "+ i);
+           System.out.println("items are "+ DirectoryLayer.getDefault().list(tx).join().get(i));
          }
         }
 //          addAttributeValuePairToTable(insertionTx, employeeTable,
