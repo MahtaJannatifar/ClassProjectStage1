@@ -38,7 +38,7 @@ public class TableManagerImpl implements TableManager{
       return  StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
     }
     else if(primaryKeyAttributeNames == null){
-      return  StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+      return  StatusCode.TABLE_CREATION_NO_PRIMARY_KEY;
     }
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
@@ -81,11 +81,13 @@ public class TableManagerImpl implements TableManager{
 //        for (e in tableName) {
           Transaction insertionTx = db.createTransaction();
           addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], "hello");
-        addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[1],attributeNames[1], "hello2");
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[1],attributeNames[1], "hello2");
 
         System.out.println("inserted subdir is "+subdir);
         if( DirectoryLayer.getDefault().list(tx).join().size() >0) {
-          System.out.println("size is "+  DirectoryLayer.getDefault().list(tx).join().size());
+         for(int i=0; i<DirectoryLayer.getDefault().list(tx).join().size(); i++){
+           System.out.println("items are "+ i);
+         }
         }
 //          addAttributeValuePairToTable(insertionTx, employeeTable,
 //                  ssn, Employee.EMPLOYEE_ATTRIBUTE_NAME, e.att());
