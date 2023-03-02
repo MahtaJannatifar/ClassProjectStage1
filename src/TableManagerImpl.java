@@ -28,7 +28,6 @@ public class TableManagerImpl implements TableManager{
   public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType,
                          String[] primaryKeyAttributeNames) {
     // your code
-    System.out.println("----");
     if(tableName == null){
       return StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
     }
@@ -78,7 +77,9 @@ public class TableManagerImpl implements TableManager{
         //need to add the table to fdb:
 //        for (e in tableName) {
           Transaction insertionTx = db.createTransaction();
-          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], 123);
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], "hello");
+        addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[0],attributeNames[0], "hello2");
+
         System.out.println("inserted subdir is "+subdir);
         if( DirectoryLayer.getDefault().list(tx).join().size() >0) {
           System.out.println("size is "+  DirectoryLayer.getDefault().list(tx).join().size());
