@@ -74,7 +74,7 @@ public class TableManagerImpl implements TableManager{
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
         System.out.println("name: "+ tableName);
         System.out.println("table already exists");
-        return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+        return StatusCode.SUCCESS;
       }
       else{
         System.out.println("does not exist");
