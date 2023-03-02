@@ -42,7 +42,7 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
-    else if(primaryKeyAttributeNames.length == 0 ){
+    else if(primaryKeyAttributeNames.getClass().getName() != "String[]"){
       System.out.println("NO PRIMARY KEY_______");
       return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
     }
@@ -77,7 +77,7 @@ public class TableManagerImpl implements TableManager{
         return StatusCode.SUCCESS;
       }
       else{
-        System.out.println(tableName+"does not exist");
+        System.out.println(tableName+" does not exist");
         Transaction insertionTx = db.createTransaction();
         //need to add the table to fdb:
         for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
@@ -87,7 +87,7 @@ public class TableManagerImpl implements TableManager{
 
           System.out.println("inserted subdir is " + subdir);
           if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
-              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
+              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
           }
         }
         return StatusCode.SUCCESS;
