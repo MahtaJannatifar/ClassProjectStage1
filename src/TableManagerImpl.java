@@ -78,18 +78,18 @@ public class TableManagerImpl implements TableManager{
       }
       else{
         System.out.println("does not exist");
-//        Transaction insertionTx = db.createTransaction();
-//        //need to add the table to fdb:
-//        for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
-//
-//          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
-//          System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
-//
-//          System.out.println("inserted subdir is " + subdir);
-//          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
-//              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
-//          }
-//        }
+        Transaction insertionTx = db.createTransaction();
+        //need to add the table to fdb:
+        for (int i=0; i< DirectoryLayer.getDefault().list(insertionTx).join().size(); i++) {
+
+          addAttributeValuePairToTable(insertionTx, subdir, primaryKeyAttributeNames[i], attributeNames[i],"value" );
+          System.out.println("PK SIZE IS "+ primaryKeyAttributeNames.length);
+
+          System.out.println("inserted subdir is " + subdir);
+          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
+              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join().get(i));
+          }
+        }
         return StatusCode.SUCCESS;
 
       }
