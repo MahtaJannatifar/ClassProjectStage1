@@ -42,7 +42,8 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
-    else if(primaryKeyAttributeNames.getClass().getName() != "String[]"){
+//    todo: figure out condition for this status code:
+    else if(primaryKeyAttributeNames.length == 0 ){
       System.out.println("NO PRIMARY KEY_______");
       return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
     }
