@@ -71,7 +71,7 @@ public class TableManagerImpl implements TableManager{
         //need to add the table to fdb:
         Transaction insertionTx = db.createTransaction();
 
-        db.run(tr->{
+
           boolean isPK = false;
           for (int i=0; i< attributeNames.length; i++) {
             String name = attributeNames[i];
@@ -84,15 +84,14 @@ public class TableManagerImpl implements TableManager{
             }
 
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-            tr.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
+            insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
           }
-          tr.commit();
-          System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tr).join());
-          return null;
-        });
+
+          System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
+
         //commit the changes to FDB
-//        insertionTx.commit();
-//        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tx).join());
+        insertionTx.commit();
+        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
         return StatusCode.SUCCESS;
       }
   }
