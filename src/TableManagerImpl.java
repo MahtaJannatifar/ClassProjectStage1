@@ -88,7 +88,7 @@ public class TableManagerImpl implements TableManager{
           }
           //commit the changes to FDB
         insertionTx.commit().join();
-        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
+//        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
 
         return StatusCode.SUCCESS;
       }
@@ -124,7 +124,7 @@ public class TableManagerImpl implements TableManager{
 //      get all the kv pairs under the subdir, k: name, v: (bool,type). itr over list of kv pair get key and value if value = t should be part of PK.
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
-//      subdir.get(i);
+      System.out.println("SUB DIR Get KEY: "+Arrays.toString(subdir.get(i).getKey()));
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
