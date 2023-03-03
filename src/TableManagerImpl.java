@@ -143,14 +143,14 @@ public class TableManagerImpl implements TableManager{
     } catch (Exception e) {
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
-    Transaction tx = db.createTransaction();
+//    Transaction tx = db.createTransaction();
 
-    for(int i=0; i<listTables().size(); i++){
-      listTables().remove(listTables().get(i));
-    }
-    if(listTables().size() == 0){
-      System.out.println("Table is empty!---");
-    }
+    db.run(tx-> {
+      final byte[] st = new Subspace(new byte[]{(byte) 0x00}).getKey();
+      final byte[] en = new Subspace(new byte[]{(byte) 0xFF}).getKey();
+      tx.clear(st, en);
+      return null;
+    });
 
     return StatusCode.SUCCESS;
   }
