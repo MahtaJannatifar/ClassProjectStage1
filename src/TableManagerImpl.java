@@ -48,6 +48,11 @@ public class TableManagerImpl implements TableManager{
       System.out.println("NO PRIMARY KEY_______");
       return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
     }
+//    todo
+//    check if PK attribute name is  subset of attribute name if pk array is inside the atr name, and if not return not found
+//    else if(){
+//
+//    }
 
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
@@ -72,7 +77,7 @@ public class TableManagerImpl implements TableManager{
 
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
         System.out.println(tableName+"  already exists,cannot create a table with existing name!");
-        return StatusCode.SUCCESS;
+        return StatusCode.TABLE_ALREADY_EXISTS;
       }
       else{
         System.out.println(tableName+" does not exist, going to add to table.");
