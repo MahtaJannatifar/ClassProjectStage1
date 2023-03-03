@@ -86,11 +86,8 @@ public class TableManagerImpl implements TableManager{
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
             insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
           }
-
-
-
-        //commit the changes to FDB
-        insertionTx.commit();
+          //commit the changes to FDB
+        insertionTx.commit().join();
         System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
 
         return StatusCode.SUCCESS;
@@ -119,12 +116,15 @@ public class TableManagerImpl implements TableManager{
     TableMetadata tmd = new TableMetadata();
 //    todo: get the actual metadata for tmd -> use fdb based on how the data is stored
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
-    for (String tableName : tableList) {
+
+    for(int i=0; i<tableList.size(); i++){
+      String tableName = tableList.get(i);
       //      get all the KV pair under tableName directory, get directory of FDB with this name (create())
       final DirectorySubspace subdir = DirectoryLayer.getDefault().createOrOpen(db, PathUtil.from(tableName)).join();
 //      get all the kv pairs under the subdir, k: name, v: (bool,type). itr over list of kv pair get key and value if value = t should be part of PK.
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
+//      subdir.get(i);
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
