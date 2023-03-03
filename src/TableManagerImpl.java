@@ -38,16 +38,18 @@ public class TableManagerImpl implements TableManager{
     }
   //check if PK attribute name is  subset of attribute name if pk array is inside the atr name, and if not return not found
     int m=attributeNames.length,  n=primaryKeyAttributeNames.length;
-    List<String> PKList = null;
+    String[] PKList = null;
     int k;
     int j;
     for ( k=0; k<n; k++){
       for ( j = 0; j<m; j++){
 //        todo: SIZE of the atr names and the pklist is diffent=> null exception => fix!
-        if(primaryKeyAttributeNames[k].equals(attributeNames[j]))
+        if(primaryKeyAttributeNames[k].equals(attributeNames[j])) {
           // save all PK in the list
-          PKList.add(primaryKeyAttributeNames[k]);
+//          PKList[k] = primaryKeyAttributeNames[k];
+//          PKList.add(primaryKeyAttributeNames[k]);
           break;
+        }
       }
       if (j == m){
         return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
@@ -74,15 +76,16 @@ public class TableManagerImpl implements TableManager{
 
         //need to add the table to fdb:
         Transaction insertionTx = db.createTransaction();
-        Boolean isPK = false;
+        boolean isPK = false;
         for (int i=0; i< attributeNames.length; i++) {
-          String name = Arrays.toString(attributeNames);
-          if (PKList.contains(Arrays.toString(attributeNames))){
+
+          if (Arrays.asList(primaryKeyAttributeNames).contains(attributeNames[i])){
             System.out.println("it is a PK! ");
             isPK = true;
           }
+          String name = attributeNames[i];
 //          todo: check if this atr is PK( tuples) ? tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,atrType).pack());
+          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,"123").pack());
 
           if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
               System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
