@@ -72,13 +72,15 @@ public class TableManagerImpl implements TableManager{
         Transaction insertionTx = db.createTransaction();
         boolean isPK = false;
         for (int i=0; i< attributeNames.length; i++) {
-
-          if (Arrays.asList(primaryKeyAttributeNames).contains(attributeNames[i])){
-            System.out.println("it is a PK! ");
-            isPK = true;
-          }
           String name = attributeNames[i];
           String type = attributeType[i].toString();
+
+          //if attribute name is inside primary key attribute name, it's a PK
+          if (Arrays.asList(primaryKeyAttributeNames).contains(name)){
+            System.out.println(name + "it is a PK! ");
+            isPK = true;
+          }
+
           //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
           insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
         }
