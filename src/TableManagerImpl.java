@@ -162,7 +162,7 @@ public class TableManagerImpl implements TableManager{
       tx.clear(st, en);
       return null;
     });
-
+    System.out.println("DROPPED");
     return StatusCode.SUCCESS;
   }
 }
