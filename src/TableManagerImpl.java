@@ -16,16 +16,6 @@ import java.util.List;
  * in this class.
  */
 public class TableManagerImpl implements TableManager{
-  public static void addAttributeValuePairToTable(Transaction tx, DirectorySubspace table, String primaryKey,
-                                                  String attributeName, Object attributeValue) {
-    Tuple keyTuple = new Tuple();
-    keyTuple = keyTuple.add(primaryKey).add(attributeName);
-
-    Tuple valueTuple = new Tuple();
-    valueTuple = valueTuple.addObject(attributeValue);
-    tx.set(table.pack(keyTuple), valueTuple.pack());
-  }
-
   @Override
   public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType, String[] primaryKeyAttributeNames) {
     // your code
@@ -44,16 +34,21 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
-//    todo: figure out condition for this status code:
-    else if(primaryKeyAttributeNames.length == 0 ){
-      System.out.println("NO PRIMARY KEY_______");
-      return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
-    }
 //    todo
+
 //    check if PK attribute name is  subset of attribute name if pk array is inside the atr name, and if not return not found
-//    else if(){
-//
-//    }
+    int m=attributeNames.length,  n=primaryKeyAttributeNames.length;
+    int k=0;
+    int j=0;
+    for ( k=0; k<n; k++){
+      for ( j = 0; j<m; j++){
+        if(primaryKeyAttributeNames[k] == attributeNames[j])
+          break;
+      }
+      if (j == m){
+        return StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND;
+      }
+    }
 
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
@@ -79,20 +74,19 @@ public class TableManagerImpl implements TableManager{
         System.out.println(tableName+" does not exist, going to add to table.");
 
         //need to add the table to fdb:
-        Transaction insertionTx = db.createTransaction();
-        for (int i=0; i< attributeNames.length; i++) {
-
-//          false if not pk, true if it is pk
-          //Tuple(false,typeofAtr)
-//          todo: check if this atr is PK( tuples) ? tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-          insertionTx.set((attributeNames.get(i)),(false,type));
-
-          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
-              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
-          }
-        }
-//        commit the changes to FDB
-        insertionTx.commit();
+//        Transaction insertionTx = db.createTransaction();
+//        for (int i=0; i< attributeNames.length; i++) {
+//
+////          false if not pk, true if it is pk
+////          todo: check if this atr is PK( tuples) ? tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
+//          insertionTx.set((attributeNames.get(i)),(false,type));
+//
+//          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
+//              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
+//          }
+//        }
+////        commit the changes to FDB
+//        insertionTx.commit();
         return StatusCode.SUCCESS;
       }
   }
@@ -127,7 +121,7 @@ public class TableManagerImpl implements TableManager{
 //      get all the kv pairs under the subdir, k: name, c: bool. itr over list of kv pair get key and value if value = t should be part of PK.
       //todo: have a list of all the PK and add to tableMetaData(atr,PKlist)
       // key is attribute names, collect all keys under a list
-      List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
+//      List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
     return  List_table;
