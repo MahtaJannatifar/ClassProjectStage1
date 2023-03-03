@@ -86,11 +86,11 @@ public class TableManagerImpl implements TableManager{
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
             tr.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
           }
-          //commit the changes to FDB
-          tr.commit();
+
           return null;
         });
-
+        //commit the changes to FDB
+        insertionTx.commit();
 
 
           System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tx).join());
