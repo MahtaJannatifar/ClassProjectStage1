@@ -70,22 +70,28 @@ public class TableManagerImpl implements TableManager{
 
         //need to add the table to fdb:
         Transaction insertionTx = db.createTransaction();
-        boolean isPK = false;
-        for (int i=0; i< attributeNames.length; i++) {
-          String name = attributeNames[i];
-          String type = attributeType[i].toString();
 
-          //if attribute name is inside primary key attribute name, it's a PK
-          if (Arrays.asList(primaryKeyAttributeNames).contains(name)){
-            System.out.println(name + "it is a PK! ");
-            isPK = true;
+        db.run(tr->{
+          boolean isPK = false;
+          for (int i=0; i< attributeNames.length; i++) {
+            String name = attributeNames[i];
+            String type = attributeType[i].toString();
+
+            //if attribute name is inside primary key attribute name, it's a PK
+            if (Arrays.asList(primaryKeyAttributeNames).contains(name)){
+              System.out.println(name + " is a PK! ");
+              isPK = true;
+            }
+
+            //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
+            tr.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
           }
+          //commit the changes to FDB
+          tr.commit();
+          return null;
+        });
 
-          //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
-        }
-//        commit the changes to FDB
-        insertionTx.commit();
+
 
           System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tx).join());
 
