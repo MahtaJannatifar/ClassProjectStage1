@@ -38,16 +38,11 @@ public class TableManagerImpl implements TableManager{
     }
   //check if PK attribute name is  subset of attribute name if pk array is inside the atr name, and if not return not found
     int m=attributeNames.length,  n=primaryKeyAttributeNames.length;
-    String[] PKList = null;
     int k;
     int j;
     for ( k=0; k<n; k++){
       for ( j = 0; j<m; j++){
-//        todo: SIZE of the atr names and the pklist is diffent=> null exception => fix!
         if(primaryKeyAttributeNames[k].equals(attributeNames[j])) {
-          // save all PK in the list
-//          PKList[k] = primaryKeyAttributeNames[k];
-//          PKList.add(primaryKeyAttributeNames[k]);
           break;
         }
       }
@@ -64,7 +59,6 @@ public class TableManagerImpl implements TableManager{
       } catch (Exception e) {
         System.out.println("ERROR: the database is not successfully opened: " + e);
       }
-      final DirectorySubspace subdir = DirectoryLayer.getDefault().createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
 
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
@@ -84,15 +78,15 @@ public class TableManagerImpl implements TableManager{
             isPK = true;
           }
           String name = attributeNames[i];
-//          todo: check if this atr is PK( tuples) ? tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,"123").pack());
-
-          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
-              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
-          }
+          String type = attributeType[i].toString();
+          //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
+          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
         }
 //        commit the changes to FDB
         insertionTx.commit();
+        if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
+          System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tx).join());
+        }
         return StatusCode.SUCCESS;
       }
   }
