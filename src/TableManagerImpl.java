@@ -43,6 +43,7 @@ public class TableManagerImpl implements TableManager{
     int j;
     for ( k=0; k<n; k++){
       for ( j = 0; j<m; j++){
+//        todo: SIZE of the atr names and the pklist is diffent=> null exception => fix!
         if(primaryKeyAttributeNames[k].equals(attributeNames[j]))
           // save all PK in the list
           PKList.add(primaryKeyAttributeNames[k]);
@@ -81,7 +82,7 @@ public class TableManagerImpl implements TableManager{
             isPK = true;
           }
 //          todo: check if this atr is PK( tuples) ? tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-//          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,atrType).pack());
+          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,atrType).pack());
 
           if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
               System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
