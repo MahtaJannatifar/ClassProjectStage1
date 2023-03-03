@@ -6,6 +6,8 @@ import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
 import com.apple.foundationdb.subspace.Subspace;
 import com.apple.foundationdb.tuple.Tuple;
+
+import java.util.Arrays;
 import java.util. HashMap;
 
 import java.util.HashMap;
@@ -34,15 +36,16 @@ public class TableManagerImpl implements TableManager{
     else if(attributeNames.length != attributeType.length){
       return StatusCode.TABLE_CREATION_DIFFERENT_SIZES;
     }
-//    todo
-
-//    check if PK attribute name is  subset of attribute name if pk array is inside the atr name, and if not return not found
+  //check if PK attribute name is  subset of attribute name if pk array is inside the atr name, and if not return not found
     int m=attributeNames.length,  n=primaryKeyAttributeNames.length;
-    int k=0;
-    int j=0;
+    List<String> PKList = null;
+    int k;
+    int j;
     for ( k=0; k<n; k++){
       for ( j = 0; j<m; j++){
-        if(primaryKeyAttributeNames[k] == attributeNames[j])
+        if(primaryKeyAttributeNames[k].equals(attributeNames[j]))
+          // save all PK in the list
+          PKList.add(primaryKeyAttributeNames[k]);
           break;
       }
       if (j == m){
@@ -52,41 +55,40 @@ public class TableManagerImpl implements TableManager{
 
       FDB fdb = FDB.selectAPIVersion(710);
       Database db = null;
-      DirectorySubspace rootDirectory = null;
 
       try {
         db = fdb.open();
       } catch (Exception e) {
         System.out.println("ERROR: the database is not successfully opened: " + e);
       }
-      // initialize root directory, which stands for the Company
-
-      // if the subdirectory does not exist, add it
-      // initialize two subdirectories under the company, Employee and Department
       final DirectorySubspace subdir = DirectoryLayer.getDefault().createOrOpen(db, PathUtil.from(tableName)).join();
       Transaction tx = db.createTransaction();
 
       if( DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
-        System.out.println(tableName+"  already exists,cannot create a table with existing name!");
+        System.out.println(tableName+"  already exists!");
         return StatusCode.TABLE_ALREADY_EXISTS;
       }
       else{
         System.out.println(tableName+" does not exist, going to add to table.");
 
         //need to add the table to fdb:
-//        Transaction insertionTx = db.createTransaction();
-//        for (int i=0; i< attributeNames.length; i++) {
-//
-////          false if not pk, true if it is pk
-////          todo: check if this atr is PK( tuples) ? tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-//          insertionTx.set((attributeNames.get(i)),(false,type));
-//
-//          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
-//              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
-//          }
-//        }
-////        commit the changes to FDB
-//        insertionTx.commit();
+        Transaction insertionTx = db.createTransaction();
+        Boolean isPK = false;
+        for (int i=0; i< attributeNames.length; i++) {
+          String name = Arrays.toString(attributeNames);
+          if (PKList.contains(Arrays.toString(attributeNames))){
+            System.out.println("it is a PK! ");
+            isPK = true;
+          }
+//          todo: check if this atr is PK( tuples) ? tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
+//          insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,atrType).pack());
+
+          if (DirectoryLayer.getDefault().list(tx).join().size() > 0) {
+              System.out.println("items are " + DirectoryLayer.getDefault().list(tx).join());
+          }
+        }
+//        commit the changes to FDB
+        insertionTx.commit();
         return StatusCode.SUCCESS;
       }
   }
@@ -103,7 +105,6 @@ public class TableManagerImpl implements TableManager{
     // your code
     FDB fdb = FDB.selectAPIVersion(710);
     Database db = null;
-    DirectorySubspace rootDirectory = null;
     try {
       db = fdb.open();
     } catch (Exception e) {
@@ -114,14 +115,13 @@ public class TableManagerImpl implements TableManager{
     TableMetadata tmd = new TableMetadata();
 //    todo: get the actual metadata for tmd -> use fdb based on how the data is stored
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
-    for(int i=0; i<tableList.size(); i++){
-      String tableName = tableList.get(i);
-//      get all the KV pair under tableName directory, get directory of FDB with this name (create())
+    for (String tableName : tableList) {
+      //      get all the KV pair under tableName directory, get directory of FDB with this name (create())
       final DirectorySubspace subdir = DirectoryLayer.getDefault().createOrOpen(db, PathUtil.from(tableName)).join();
 //      get all the kv pairs under the subdir, k: name, c: bool. itr over list of kv pair get key and value if value = t should be part of PK.
       //todo: have a list of all the PK and add to tableMetaData(atr,PKlist)
       // key is attribute names, collect all keys under a list
-//      List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
+      //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
     return  List_table;
@@ -145,7 +145,7 @@ public class TableManagerImpl implements TableManager{
     // your code
     FDB fdb = FDB.selectAPIVersion(710);
     Database db = null;
-    DirectorySubspace rootDirectory = null;
+
     try {
       db = fdb.open();
     } catch (Exception e) {
