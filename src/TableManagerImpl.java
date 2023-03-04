@@ -7,6 +7,7 @@ import com.apple.foundationdb.directory.PathUtil;
 import com.apple.foundationdb.subspace.Subspace;
 import com.apple.foundationdb.tuple.Tuple;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util. HashMap;
 
@@ -120,7 +121,7 @@ public class TableManagerImpl implements TableManager{
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
 //    for each table, make s list of atrnames,types, pks and insert to list_table
-    List<Object> atrNameList = null;
+    List<Object> atrNameList = new ArrayList<>();
 //    String typesList[] = null;
 //    String primKeysList[] = null;
 
@@ -134,7 +135,6 @@ public class TableManagerImpl implements TableManager{
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
       System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).range());
-      assert atrNameList != null;
       atrNameList.add(key);
       System.out.println("SIZE: "+ atrNameList.size());
 
