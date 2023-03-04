@@ -122,7 +122,8 @@ public class TableManagerImpl implements TableManager{
     System.out.println("Table list => "+ tableList);
 //    for each table, make s list of atrnames,types, pks and insert to list_table
     List<Object> atrNameList = new ArrayList<>();
-//    String typesList[] = null;
+//    todo
+    String typesList[] = new String[];
 //    String primKeysList[] = null;
 
     for(int i=0; i<tableList.size(); i++){
@@ -133,10 +134,11 @@ public class TableManagerImpl implements TableManager{
       // key is attribute names, collect all keys under a list
       Object key = Tuple.from(tableName).get(i);
 
+
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
       System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).range());
       atrNameList.add(key);
-      System.out.println("SIZE: "+ atrNameList.size());
+      System.out.println("list of attributes: "+ atrNameList);
 
 //      System.out.println("atrNameList "+ atrNameList.get(i));
 
