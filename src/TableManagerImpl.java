@@ -133,7 +133,7 @@ public class TableManagerImpl implements TableManager{
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ Tuple.from(tableName).get(i));
       atrNameList.add(Tuple.from(tableName).get(i));
-      System.out.println(atrNameList);
+      System.out.println("atrNameList "+ atrNameList);
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
