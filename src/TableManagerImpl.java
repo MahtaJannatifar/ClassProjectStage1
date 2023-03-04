@@ -89,7 +89,7 @@ public class TableManagerImpl implements TableManager{
             insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
           }
           //commit the changes to FDB
-        insertionTx.commit().join();
+        insertionTx.commit();
         System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
 
 
