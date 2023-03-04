@@ -131,11 +131,8 @@ public class TableManagerImpl implements TableManager{
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
       Object key = Tuple.from(tableName).get(i);
-      if(key != null){
-        atrNameList.add(key);
-        System.out.println("KEYS: "+ atrNameList);
-      }
-      System.out.println(tableName+" SUB DIR Get KEY: "+ key);
+
+//      System.out.println(tableName+" SUB DIR Get KEY: "+ key);
       System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).range().toString());
 
 
