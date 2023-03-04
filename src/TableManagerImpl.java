@@ -129,7 +129,7 @@ public class TableManagerImpl implements TableManager{
 //      get all the kv pairs under the subdir, k: name, v: (bool,type). itr over list of kv pair get key and value if value = t should be part of PK.
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
-      System.out.println(tableName+" SUB DIR Get KEY: "+subdir.get(i));
+      System.out.println(tableName+" SUB DIR Get KEY: "+subdir.get(i).range());
 //      atrNameList[i] = subdir.get(i);
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
