@@ -105,7 +105,6 @@ public class TableManagerImpl implements TableManager{
 
   @Override
   public HashMap<String, TableMetadata> listTables() {
-
     // your code
     FDB fdb = FDB.selectAPIVersion(710);
     Database db = null;
@@ -118,9 +117,8 @@ public class TableManagerImpl implements TableManager{
     System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tx).join());
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
-//    todo: get the actual metadata for tmd -> use fdb based on how the data is stored
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
-
+    System.out.println("Table list => "+ tableList);
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
       //      get all the KV pair under tableName directory, get directory of FDB with this name (create())
