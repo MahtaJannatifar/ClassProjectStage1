@@ -119,11 +119,12 @@ public class TableManagerImpl implements TableManager{
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
 //    for each table, make s list of atrnames,types, pks and insert to list_table
+    List<Object> atrNameList = null;
+    String typesList[] = null;
+    String primKeysList[] = null;
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
-      List<Object> atrNameList = null;
-      String typesList[] = null;
-      String primKeysList[] = null;
+
       //      get all the KV pair under tableName directory, get directory of FDB with this name (create())
       final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
 //      get all the kv pairs under the subdir, k: name, v: (bool,type). itr over list of kv pair get key and value if value = t should be part of PK.
