@@ -67,6 +67,8 @@ public class TableManagerImpl implements TableManager{
       }
       else{
         System.out.println(tableName+" does not exist, going to add to table.");
+        final DirectorySubspace dir = DirectoryLayer.getDefault().createOrOpen(db, PathUtil.from(tableName)).join();
+
 
         //need to add the table to fdb:
         Transaction insertionTx = db.createTransaction();
