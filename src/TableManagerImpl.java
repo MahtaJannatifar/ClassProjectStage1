@@ -130,10 +130,8 @@ public class TableManagerImpl implements TableManager{
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
 
-      CompletableFuture<byte[]> a = tx.get((Tuple.from(tableName).pack()));
-      System.out.println("A: "+ a);
 
-      System.out.println(tableName+" SUB DIR Get KEY: "+subdir.get(i).range());
+      System.out.println(tableName+" SUB DIR Get KEY: "+subdir.get(i).get(Tuple.from(tableName).pack()));
 //      atrNameList[i] = subdir.get(i);
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
