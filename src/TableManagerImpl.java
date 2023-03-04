@@ -118,14 +118,19 @@ public class TableManagerImpl implements TableManager{
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
+//    for each table, make s list of atrnames,types, pks and insert to list_table
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
+      String atrNameList[] = null;
+      String typesList[] = null;
+      String primKeysList[] = null;
       //      get all the KV pair under tableName directory, get directory of FDB with this name (create())
-      final DirectorySubspace subdir = DirectoryLayer.getDefault().createOrOpen(db, PathUtil.from(tableName)).join();
+      final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
 //      get all the kv pairs under the subdir, k: name, v: (bool,type). itr over list of kv pair get key and value if value = t should be part of PK.
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
-      System.out.println(tableName+" SUB DIR Get KEY: "+Arrays.toString(subdir.get(i).getKey()));
+      System.out.println(tableName+" SUB DIR Get KEY: "+subdir.get(i));
+//      atrNameList[i] = subdir.get(i);
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
