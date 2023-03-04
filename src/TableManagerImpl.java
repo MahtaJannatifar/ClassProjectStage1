@@ -88,7 +88,7 @@ public class TableManagerImpl implements TableManager{
           }
           //commit the changes to FDB
         insertionTx.commit().join();
-        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
+//        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
 
 
         return StatusCode.SUCCESS;
