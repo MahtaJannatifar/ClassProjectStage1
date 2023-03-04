@@ -89,8 +89,8 @@ public class TableManagerImpl implements TableManager{
             insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
           }
           //commit the changes to FDB
-        insertionTx.commit();
-        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
+        insertionTx.commit().join();
+//        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
 
 
         return StatusCode.SUCCESS;
@@ -115,6 +115,7 @@ public class TableManagerImpl implements TableManager{
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
     Transaction tx = db.createTransaction();
+    System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tx).join());
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
 //    todo: get the actual metadata for tmd -> use fdb based on how the data is stored
