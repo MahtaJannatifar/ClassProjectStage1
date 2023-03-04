@@ -128,9 +128,9 @@ public class TableManagerImpl implements TableManager{
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
       System.out.println(tableName+" SUB DIR Get KEY: "+ Tuple.from(tableName).get(i));
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).getNestedTuple(i).toString());
+      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).range().toString());
       atrNameList.add(Tuple.from(tableName).get(i));
-      System.out.println("atrNameList "+ atrNameList.get(i));
+//      System.out.println("atrNameList "+ atrNameList.get(i));
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
