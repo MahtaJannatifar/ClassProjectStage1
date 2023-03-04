@@ -127,9 +127,10 @@ public class TableManagerImpl implements TableManager{
       final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
-      System.out.println(tableName+" SUB DIR Get KEY: "+ Tuple.from(tableName).get(i));
+      Object key = Tuple.from(tableName).get(i);
+      System.out.println(tableName+" SUB DIR Get KEY: "+ key);
       System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).range().toString());
-      atrNameList.add(Tuple.from(tableName).get(i));
+      atrNameList.add(key);
 //      System.out.println("atrNameList "+ atrNameList.get(i));
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
