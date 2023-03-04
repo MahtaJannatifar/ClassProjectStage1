@@ -31,7 +31,7 @@ public class TableManagerTest {
    */
   @Test
   public void unitTest1() {
-//    tableManager.dropAllTables();
+    tableManager.dropAllTables();
 
     TableMetadata EmployeeTable = new TableMetadata(EmployeeTableAttributeNames, EmployeeTableAttributeTypes,
         EmployeeTablePKAttributes);
@@ -50,7 +50,7 @@ public class TableManagerTest {
         EmployeeTableAttributeNames, EmployeeTableAttributeTypes, EmployeeTablePKAttributes));
 
     HashMap<String, TableMetadata> tables = tableManager.listTables();
-//    assertEquals(1, tables.size());
+    assertEquals(1, tables.size());
 
 //    assertEquals(EmployeeTable, tables.get(EmployeeTableName));
   }
