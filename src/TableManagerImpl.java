@@ -121,7 +121,7 @@ public class TableManagerImpl implements TableManager{
 //    for each table, make s list of atrnames,types, pks and insert to list_table
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
-      String atrNameList[] = null;
+      List<Object> atrNameList = null;
       String typesList[] = null;
       String primKeysList[] = null;
       //      get all the KV pair under tableName directory, get directory of FDB with this name (create())
@@ -132,7 +132,9 @@ public class TableManagerImpl implements TableManager{
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ Tuple.from(tableName).get(i));
-//      atrNameList[i] = subdir.get(i);
+      atrNameList.add(Tuple.from(tableName).get(i));
+      System.out.println(atrNameList);
+
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
