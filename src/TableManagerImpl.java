@@ -114,7 +114,6 @@ public class TableManagerImpl implements TableManager{
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
     Transaction tx = db.createTransaction();
-    System.out.println("FDB items are " + DirectoryLayer.getDefault().list(tx).join());
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
@@ -126,7 +125,7 @@ public class TableManagerImpl implements TableManager{
 //      get all the kv pairs under the subdir, k: name, v: (bool,type). itr over list of kv pair get key and value if value = t should be part of PK.
       //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
       // key is attribute names, collect all keys under a list
-      System.out.println("SUB DIR Get KEY: "+Arrays.toString(subdir.get(i).getKey()));
+      System.out.println(tableName+" SUB DIR Get KEY: "+Arrays.toString(subdir.get(i).getKey()));
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
@@ -147,7 +146,6 @@ public class TableManagerImpl implements TableManager{
 
   @Override
   public StatusCode dropAllTables() {
-    System.out.println("DROP tables is being called");
     // your code
     FDB fdb = FDB.selectAPIVersion(710);
     Database db = null;
@@ -164,7 +162,6 @@ public class TableManagerImpl implements TableManager{
       tx.clear(st, en);
       return null;
     });
-    System.out.println("DROPPED");
     return StatusCode.SUCCESS;
   }
 }
