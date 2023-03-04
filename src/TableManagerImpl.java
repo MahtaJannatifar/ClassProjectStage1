@@ -132,7 +132,7 @@ public class TableManagerImpl implements TableManager{
       // key is attribute names, collect all keys under a list
       Object key = Tuple.from(tableName).get(i);
 
-      System.out.println(tableName+" SUB DIR Get KEY: "+ tx.get(Tuple.from(tableName).pack()));
+      System.out.println(tableName+" SUB DIR Get KEY: "+ Arrays.toString(subdir.get(i).getKey()));
       System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).range());
       atrNameList.add(Tuple.from(tableName).get(i));
       System.out.println("SIZE: "+ atrNameList.size());
