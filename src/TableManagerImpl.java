@@ -129,7 +129,7 @@ public class TableManagerImpl implements TableManager{
 
       final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       Object key = Tuple.from(tableName).get(i);
-      Object value = Tuple.from(key).get(i);
+      Object value = Tuple.from(Tuple.from(key).get(i)).get(i);
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
