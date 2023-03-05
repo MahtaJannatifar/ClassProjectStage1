@@ -135,7 +135,7 @@ public class TableManagerImpl implements TableManager{
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ Arrays.toString(k.pack()));
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(k).pack().getClass().getName());
+      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(k).getNestedTuple(i));
 
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
