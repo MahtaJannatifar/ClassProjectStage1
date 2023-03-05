@@ -2,6 +2,7 @@ import com.apple.foundationdb.Database;
 import com.apple.foundationdb.FDB;
 import com.apple.foundationdb.KeyValue;
 import com.apple.foundationdb.Transaction;
+import com.apple.foundationdb.async.AsyncIterable;
 import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
@@ -13,7 +14,6 @@ import java.util.Arrays;
 import java.util. HashMap;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * TableManagerImpl implements interfaces in {#TableManager}. You should put your implementation
@@ -130,7 +130,7 @@ public class TableManagerImpl implements TableManager{
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
       Object key = Tuple.from(k).get(i);
-      Tuple KV_pair = Tuple.from(tableName).getNestedTuple(i);
+      AsyncIterable<KeyValue> KV_pair = tx.getRange(Tuple.from(tableName).range());
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
       System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair);
