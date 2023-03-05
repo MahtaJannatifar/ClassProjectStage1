@@ -127,21 +127,15 @@ public class TableManagerImpl implements TableManager{
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
-     Tuple k = Tuple.from(tableName);
+      Tuple k = Tuple.from(tableName);
+      Object key = Tuple.from(k).get(i);
+      Tuple KV_pair = Tuple.from(Tuple.from(k).get(i));
 
-      final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
-      Object key = new KeyValue(k.pack(),Tuple.from(k).pack());
-
-
-
-      System.out.println(tableName+" SUB DIR Get KEY: "+ Tuple.from(k).get(i));
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(Tuple.from(key).get(i)));
+      System.out.println(tableName+" SUB DIR Get KEY: "+ key);
+      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair);
 
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
-
-      System.out.println("list of attributes: "+ atrNameList);
-      System.out.println("list of attributes: "+ atrNameList);
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
