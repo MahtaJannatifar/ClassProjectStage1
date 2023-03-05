@@ -140,7 +140,7 @@ public class TableManagerImpl implements TableManager{
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
 
-      System.out.println("list of attributes: "+ atrNameList);
+      System.out.println("list of attributes: "+ atrNameList.get(i).toString());
       System.out.println("list of attributes: "+ atrNameList);
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
