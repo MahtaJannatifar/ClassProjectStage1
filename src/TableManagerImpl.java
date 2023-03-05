@@ -129,7 +129,7 @@ public class TableManagerImpl implements TableManager{
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
       Object key = Tuple.from(k).get(i);
-      Tuple KV_pair = Tuple.from(Tuple.from(k).get(i));
+      Tuple KV_pair = Tuple.from(tableName).getNestedTuple(i);
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
       System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair);
