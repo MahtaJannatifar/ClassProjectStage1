@@ -93,6 +93,7 @@ public class TableManagerImpl implements TableManager{
           //commit the changes to FDB
         insertionTx.commit().join();
           insertionTx.close();
+          db.close();
 //        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
 
 
