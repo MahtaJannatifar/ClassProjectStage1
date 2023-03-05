@@ -134,8 +134,8 @@ public class TableManagerImpl implements TableManager{
 
 
 
-      System.out.println(tableName+" SUB DIR Get KEY: "+ Tuple.from(key).get(i));
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(Tuple.from(key).get(i)).get(i));
+      System.out.println(tableName+" SUB DIR Get KEY: "+ Tuple.from(k).get(i));
+      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(Tuple.from(key).get(i)).get(i).toString());
 
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
