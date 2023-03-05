@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util. HashMap;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * TableManagerImpl implements interfaces in {#TableManager}. You should put your implementation
@@ -130,10 +131,11 @@ public class TableManagerImpl implements TableManager{
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
       Object key = Tuple.from(k).get(i);
-      AsyncIterable<KeyValue> KV_pair = tx.getRange(Tuple.from(tableName).range());
+      CompletableFuture<byte[]> KV_pair = tx.get(Tuple.from(tableName).pack());
+
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
-      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair.toString());
+      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair);
 
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
