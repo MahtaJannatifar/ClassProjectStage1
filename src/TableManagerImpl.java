@@ -120,24 +120,22 @@ public class TableManagerImpl implements TableManager{
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
-//    for each table, make s list of atrnames,types, pks and insert to list_table
     List<Object> atrNameList = new ArrayList<>();
-//    todo
-    String typesList[] = new String[];
+    String typesList[];
 //    String primKeysList[] = null;
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
 
       final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
-      //todo: have a list of all the PK and add to tableMetaData(atrNames, atrValues, PKs)
-      // key is attribute names, collect all keys under a list
       Object key = Tuple.from(tableName).get(i);
+      Object value = Tuple.from(key).get(i);
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(tableName).range());
+      System.out.println(tableName+" SUB DIR Get VALUE: "+ value);
       atrNameList.add(key);
+
       System.out.println("list of attributes: "+ atrNameList);
 
 //      System.out.println("atrNameList "+ atrNameList.get(i));
