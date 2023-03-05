@@ -1,5 +1,6 @@
 import com.apple.foundationdb.Database;
 import com.apple.foundationdb.FDB;
+import com.apple.foundationdb.KeyValue;
 import com.apple.foundationdb.Transaction;
 import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
@@ -126,14 +127,15 @@ public class TableManagerImpl implements TableManager{
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
+     Tuple k = Tuple.from(tableName);
 
       final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
-      Object key = Tuple.from(tableName).get(i);
-      Object value = Tuple.from(Tuple.from(key).get(i)).get(i);
+      Object key = new KeyValue(k.pack(),Tuple.from(k).pack());
+      Object value = Tuple.from(k).pack();
 
 
-      System.out.println(tableName+" SUB DIR Get KEY: "+ key);
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ value);
+      System.out.println(tableName+" SUB DIR Get KEY: "+ Arrays.toString(k.pack()));
+      System.out.println(tableName+" SUB DIR Get VALUE: "+ Arrays.toString(Tuple.from(k).pack()));
       atrNameList.add(key);
 
       System.out.println("list of attributes: "+ atrNameList);
