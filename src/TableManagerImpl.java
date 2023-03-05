@@ -135,12 +135,12 @@ public class TableManagerImpl implements TableManager{
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ Arrays.toString(k.pack()));
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ Arrays.toString(Tuple.from(Tuple.from(k)).pack()));
+      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(k.pack()).pack());
 
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
 
-      System.out.println("list of attributes: "+ atrNameList.get(i).toString());
+      System.out.println("list of attributes: "+ atrNameList);
       System.out.println("list of attributes: "+ atrNameList);
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
