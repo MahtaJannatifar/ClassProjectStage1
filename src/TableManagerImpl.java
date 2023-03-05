@@ -133,7 +133,7 @@ public class TableManagerImpl implements TableManager{
       AsyncIterable<KeyValue> KV_pair = tx.getRange(Tuple.from(tableName).range());
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
-      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair.asList().join());
+      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair.toString());
 
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
