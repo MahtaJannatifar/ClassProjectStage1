@@ -122,8 +122,8 @@ public class TableManagerImpl implements TableManager{
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
     List<Object> atrNameList = new ArrayList<>();
-    String typesList[];
-//    String primKeysList[] = null;
+    List<byte[]> typesList = new ArrayList<>();
+    List<String> primKeysList = new ArrayList<>();
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
@@ -131,16 +131,16 @@ public class TableManagerImpl implements TableManager{
 
       final DirectorySubspace subdir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       Object key = new KeyValue(k.pack(),Tuple.from(k).pack());
-      Object value = Tuple.from(k).pack();
+
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ Arrays.toString(k.pack()));
-      System.out.println(tableName+" SUB DIR Get VALUE: "+ Arrays.toString(Tuple.from(k).pack()));
+      System.out.println(tableName+" SUB DIR Get VALUE: "+ Tuple.from(k).pack().getClass().getName());
       atrNameList.add(key);
+      typesList.add(Tuple.from(k).pack());
 
       System.out.println("list of attributes: "+ atrNameList);
-
-//      System.out.println("atrNameList "+ atrNameList.get(i));
+      System.out.println("list of attributes: "+ atrNameList);
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
