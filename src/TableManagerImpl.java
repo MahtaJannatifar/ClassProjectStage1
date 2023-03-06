@@ -134,7 +134,7 @@ public class TableManagerImpl implements TableManager{
       Tuple k = Tuple.from(tableName);
 //      todo: change these values just need to find syntax to fetch!
       String atrName =Tuple.from(k).get(i).toString();
-      boolean isPK = false;
+      boolean isPK = true;
       AttributeType type = AttributeType.DOUBLE;
 
       System.out.println(tableName+"  ATR name: "+ atrName);
