@@ -143,7 +143,8 @@ public class TableManagerImpl implements TableManager{
       Range range = dir.range();
       List<KeyValue> kvs = tx.getRange(range).asList().join();
       //todo: name has to be attribute name, because we packed with that---???
-      Tuple key = dir.unpack(kvs.get(i).getKey());
+      Subspace sb = dir.subspace(Tuple.from(tableName));
+      Tuple key = sb.unpack(Tuple.from(kvs).pack());
 
 
 //      todo: change these values just need to find syntax to fetch!
