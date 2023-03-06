@@ -144,7 +144,7 @@ public class TableManagerImpl implements TableManager{
 
       Tuple k = Tuple.from(tableName);
 //      todo: change these values just need to find syntax to fetch!
-      Object record = Tuple.from(kvs).get(i);
+      Object record = Tuple.from(Tuple.from(kvs));
       System.out.println("Record: "+record);
       String atrName = "";
       boolean isPK = true;
