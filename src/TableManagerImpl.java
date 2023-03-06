@@ -132,11 +132,10 @@ public class TableManagerImpl implements TableManager{
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
       Object key = Tuple.from(k).get(i);
-      CompletableFuture <byte[]> atrName = tx.get(Tuple.from(tableName).pack());
+     String atrName = "attr";
       CompletableFuture<byte[]> KV_pair = tx.get(Tuple.from(tableName).pack());
       boolean isPK = KV_pair.complete(Tuple.from(tableName).pack());
       String type = "a";
-
 
       System.out.println(tableName+"  KEY: "+ key);
       System.out.println(tableName+"  KV PAIR Type: "+ isPK);
@@ -148,6 +147,7 @@ public class TableManagerImpl implements TableManager{
       }
       atrNameList.add(key);
       typesList.add(type);
+      System.out.println("PK list "+primKeysList);
 
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
