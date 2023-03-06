@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class TableManagerImpl implements TableManager{
   @Override
-  public StatusCode createTable(String tableName, String[] attributeNames, AttributeType[] attributeType, String[] primaryKeyAttributeNames) {
+  public StatusCode createTable(String tableName,  String[] attributeNames, AttributeType[] attributeType, String[] primaryKeyAttributeNames) {
     // your code
     if(tableName == null){
       return StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID;
@@ -84,10 +84,11 @@ public class TableManagerImpl implements TableManager{
               System.out.println(name + " is a PK! ");
               isPK = true;
             }
-            dir.pack(Tuple.from(name));
+
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
             //it was name instead of attribute names
             insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
+            dir.pack(Tuple.from(name));
           }
           //commit the changes to FDB
         insertionTx.commit().join();
@@ -141,8 +142,9 @@ public class TableManagerImpl implements TableManager{
       final DirectorySubspace dir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       Range range = dir.range();
       List<KeyValue> kvs = tx.getRange(range).asList().join();
-      Tuple key = dir.unpack(Tuple.from(tableName).pack());
-//      Tuple val = dir.unpack(kvs.get(i).getValue());
+      //todo: name has to be attribute name, because we packed with that---???
+      Tuple key = dir.unpack(kvs.get(i).getKey());
+
 
 //      todo: change these values just need to find syntax to fetch!
       System.out.println("key: "+ key);
