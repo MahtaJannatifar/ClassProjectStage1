@@ -125,26 +125,30 @@ public class TableManagerImpl implements TableManager{
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
      String[] atrNameList = new String[0];
+     List<String> atrs = new ArrayList<>();
     AttributeType[] typesList = new AttributeType[0];
     String[] primKeysList = new String[0];
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
-//      todo: change these values
+//      todo: change these values just need to find syntax to fetch!
       String atrName =Tuple.from(k).get(i).toString();
       boolean isPK = false;
       AttributeType type = AttributeType.DOUBLE;
 
-      System.out.println(tableName+"  KEY: "+ atrName);
-      System.out.println(tableName+"  KV PAIR Type: "+ isPK);
-      System.out.println(tableName+"  KV PAIR Type: "+ type);
+      System.out.println(tableName+"  ATR name: "+ atrName);
+      System.out.println(tableName+"  IS PK: "+ isPK);
+      System.out.println(tableName+"  ATR type: "+ type);
       // if the entry had PK=true, add the atr name
       if(isPK){
         System.out.println("ATR name is "+atrName);
         primKeysList[i]= atrName;
       }
-      atrNameList[i]= atrName;
+      atrs.add(atrName);
+      for(int m=0; m<atrs.size();m++){
+        atrNameList[m]= atrs.get(m);
+      }
       typesList[i] = type;
       List_table.put(tableName,new TableMetadata(atrNameList,  typesList,  primKeysList));
     }
