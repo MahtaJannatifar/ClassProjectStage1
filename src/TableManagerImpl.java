@@ -1,7 +1,4 @@
-import com.apple.foundationdb.Database;
-import com.apple.foundationdb.FDB;
-import com.apple.foundationdb.KeyValue;
-import com.apple.foundationdb.Transaction;
+import com.apple.foundationdb.*;
 import com.apple.foundationdb.async.AsyncIterable;
 import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
@@ -131,6 +128,8 @@ public class TableManagerImpl implements TableManager{
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
+
+
     System.out.println("Table list => "+ tableList);
      String[] atrNameList = new String[0];
      List<String> atrs = new ArrayList<>();
@@ -139,9 +138,13 @@ public class TableManagerImpl implements TableManager{
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
+      final DirectorySubspace dir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
+      Range range = dir.range();
+      List<KeyValue> kvs = tx.getRange(range).asList().join();
+
       Tuple k = Tuple.from(tableName);
 //      todo: change these values just need to find syntax to fetch!
-      String atrName =Tuple.from(k).get(i).toString();
+      String atrName = Tuple.from(kvs).pack().toString();
       boolean isPK = true;
       AttributeType type = AttributeType.DOUBLE;
 
