@@ -106,7 +106,15 @@ public class TableManagerImpl implements TableManager{
   @Override
   public StatusCode deleteTable(String tableName) {
     // your code
-    return StatusCode.SUCCESS;
+    FDB fdb = FDB.selectAPIVersion(710);
+    Database db = null;
+    try {
+      db = fdb.open();
+    } catch (Exception e) {
+      System.out.println("ERROR: the database is not successfully opened: " + e);
+    }
+
+    return StatusCode.TABLE_NOT_FOUND;
   }
 
   @Override
