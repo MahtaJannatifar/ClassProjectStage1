@@ -124,35 +124,30 @@ public class TableManagerImpl implements TableManager{
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
-    List<Object> atrNameList = new ArrayList<>();
-    List<String> typesList = new ArrayList<>();
-    List<Object> primKeysList = new ArrayList<>();
+     String[] atrNameList = new String[0];
+    AttributeType[] typesList = new AttributeType[0];
+    String[] primKeysList = new String[0];
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
-      Object key = Tuple.from(k).get(i);
-     String atrName = "attr";
-      CompletableFuture<byte[]> KV_pair = tx.get(Tuple.from(tableName).pack());
-      boolean isPK = KV_pair.complete(Tuple.from(tableName).pack());
-      String type = "a";
+//      todo: change these values
+      String atrName =Tuple.from(k).get(i).toString();
+      boolean isPK = false;
+      AttributeType type = AttributeType.DOUBLE;
 
-      System.out.println(tableName+"  KEY: "+ key);
+      System.out.println(tableName+"  KEY: "+ atrName);
       System.out.println(tableName+"  KV PAIR Type: "+ isPK);
       System.out.println(tableName+"  KV PAIR Type: "+ type);
-      //todo: if the entry had PK=true, add the atr name [not just add true false]
+      // if the entry had PK=true, add the atr name
       if(isPK){
         System.out.println("ATR name is "+atrName);
-        primKeysList.add(atrName);
+        primKeysList[i]= atrName;
       }
-      atrNameList.add(key);
-      typesList.add(type);
-      System.out.println("PK list "+primKeysList);
-
-
-      //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
+      atrNameList[i]= atrName;
+      typesList[i] = type;
+      List_table.put(tableName,new TableMetadata(atrNameList,  typesList,  primKeysList));
     }
-//    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
     tx.close();
     return  List_table;
   }
