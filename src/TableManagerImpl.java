@@ -114,7 +114,7 @@ public class TableManagerImpl implements TableManager{
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
 
-    return StatusCode.TABLE_NOT_FOUND;
+    return StatusCode.SUCCESS;
   }
 
   @Override
