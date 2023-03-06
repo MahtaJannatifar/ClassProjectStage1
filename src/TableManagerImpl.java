@@ -141,7 +141,7 @@ public class TableManagerImpl implements TableManager{
       final DirectorySubspace dir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       Range range = dir.range();
       List<KeyValue> kvs = tx.getRange(range).asList().join();
-      Tuple key = dir.unpack(Tuple.from(kvs).pack());
+      Tuple key = dir.unpack(Tuple.from(tableName).pack());
 //      Tuple val = dir.unpack(kvs.get(i).getValue());
 
 //      todo: change these values just need to find syntax to fetch!
