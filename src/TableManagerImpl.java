@@ -90,7 +90,7 @@ public class TableManagerImpl implements TableManager{
 
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
             //it was name instead of attribute names
-            insertionTx.set(Tuple.from(attributeNames[i]).pack(),Tuple.from(isPK,type).pack());
+            insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
           }
           //commit the changes to FDB
         insertionTx.commit().join();
@@ -125,30 +125,35 @@ public class TableManagerImpl implements TableManager{
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
     List<Object> atrNameList = new ArrayList<>();
-    List<Boolean> typesList = new ArrayList<>();
-    List<Boolean> primKeysList = new ArrayList<>();
+    List<String> typesList = new ArrayList<>();
+    List<Object> primKeysList = new ArrayList<>();
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
       Object key = Tuple.from(k).get(i);
+      Object atrName = tx.get(Tuple.from(tableName).pack());
       CompletableFuture<byte[]> KV_pair = tx.get(Tuple.from(tableName).pack());
-      boolean Type = KV_pair.complete(Tuple.from(tableName).pack());
+      boolean isPK = KV_pair.complete(Tuple.from(tableName).pack());
+      String type = "a";
 
 
       System.out.println(tableName+"  KEY: "+ key);
-      System.out.println(tableName+"  KV PAIR Type: "+ Type);
-      System.out.println(tableName+"  KV PAIR Type: "+ Type);
-      //if the entry had PK=true, add the atr name
-//      if()
-
+      System.out.println(tableName+"  KV PAIR Type: "+ isPK);
+      System.out.println(tableName+"  KV PAIR Type: "+ type);
+      //todo: if the entry had PK=true, add the atr name [not just add true false]
+      if(isPK){
+        System.out.println("ATR name is "+atrName);
+        primKeysList.add(atrName);
+      }
       atrNameList.add(key);
-      primKeysList.add(Type);
+      typesList.add(type);
 
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
 //    todo: for each table name get key value pairs: get all key value pair under a certain directory (list of KV pairs), key: atr name
+    tx.close();
     return  List_table;
   }
 
