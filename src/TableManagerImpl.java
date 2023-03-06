@@ -131,7 +131,7 @@ public class TableManagerImpl implements TableManager{
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
       Object key = Tuple.from(k).get(i);
-      CompletableFuture<byte[]> KV_pair = tx.get(Tuple.from(tableName).pack());
+      CompletableFuture<byte[]> KV_pair = tx.get(Tuple.from(k).pack());
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
