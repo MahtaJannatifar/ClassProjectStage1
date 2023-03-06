@@ -141,12 +141,12 @@ public class TableManagerImpl implements TableManager{
       final DirectorySubspace dir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       Range range = dir.range();
       List<KeyValue> kvs = tx.getRange(range).asList().join();
-      dir.unpack(kvs.get(i).getKey());
+      Tuple key = dir.unpack(kvs.get(i).getKey());
+      Tuple val = dir.unpack(kvs.get(i).getValue());
 
-      Tuple k = Tuple.from(tableName);
 //      todo: change these values just need to find syntax to fetch!
       Tuple record = Tuple.from(kvs);
-      System.out.println("Record: "+record);
+      System.out.println("key: "+key + "val: "+ val);
       String atrName = "";
       boolean isPK = true;
       AttributeType type = AttributeType.DOUBLE;
