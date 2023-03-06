@@ -89,7 +89,8 @@ public class TableManagerImpl implements TableManager{
             }
 
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-            insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
+            //it was name instead of attribute names
+            insertionTx.set(Tuple.from(attributeNames[i]).pack(),Tuple.from(isPK,type).pack());
           }
           //commit the changes to FDB
         insertionTx.commit().join();
@@ -124,21 +125,26 @@ public class TableManagerImpl implements TableManager{
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
     List<Object> atrNameList = new ArrayList<>();
-    List<byte[]> typesList = new ArrayList<>();
-    List<String> primKeysList = new ArrayList<>();
+    List<Boolean> typesList = new ArrayList<>();
+    List<Boolean> primKeysList = new ArrayList<>();
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
       Tuple k = Tuple.from(tableName);
       Object key = Tuple.from(k).get(i);
       CompletableFuture<byte[]> KV_pair = tx.get(Tuple.from(tableName).pack());
+      boolean Type = KV_pair.complete(Tuple.from(tableName).pack());
 
 
-      System.out.println(tableName+" SUB DIR Get KEY: "+ key);
-      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair.complete(Tuple.from(tableName).pack()));
+      System.out.println(tableName+"  KEY: "+ key);
+      System.out.println(tableName+"  KV PAIR Type: "+ Type);
+      System.out.println(tableName+"  KV PAIR Type: "+ Type);
+      //if the entry had PK=true, add the atr name
+//      if()
 
       atrNameList.add(key);
-      typesList.add(Tuple.from(k).pack());
+      primKeysList.add(Type);
+
 
       //List_table.put(tableName,new TableMetadata(attributeNames,  attributeTypes,  primaryKeys));
     }
