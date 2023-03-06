@@ -84,7 +84,7 @@ public class TableManagerImpl implements TableManager{
               System.out.println(name + " is a PK! ");
               isPK = true;
             }
-
+            dir.pack(Tuple.from(name).pack());
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
             //it was name instead of attribute names
             insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
