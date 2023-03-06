@@ -154,16 +154,16 @@ public class TableManagerImpl implements TableManager{
       System.out.println(tableName+"  IS PK: "+ isPK);
       System.out.println(tableName+"  ATR type: "+ type);
       // if the entry had PK=true, add the atr name
-      if(isPK){
-        System.out.println("ATR name is "+atrName);
-        primKeysList[i]= atrName;
-      }
-      atrs.add(atrName);
-      for(int m=0; m<atrs.size();m++){
-        atrNameList[m]= atrs.get(m);
-      }
-      typesList[i] = type;
-      List_table.put(tableName,new TableMetadata(atrNameList,  typesList,  primKeysList));
+//      if(isPK){
+//        System.out.println("ATR name is "+atrName);
+//        primKeysList[i]= atrName;
+//      }
+//      atrs.add(atrName);
+//      for(int m=0; m<atrs.size();m++){
+//        atrNameList[m]= atrs.get(m);
+//      }
+//      typesList[i] = type;
+//      List_table.put(tableName,new TableMetadata(atrNameList,  typesList,  primKeysList));
     }
     tx.close();
     return  List_table;
