@@ -135,7 +135,7 @@ public class TableManagerImpl implements TableManager{
 
 
       System.out.println(tableName+" SUB DIR Get KEY: "+ key);
-      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair.join());
+      System.out.println(tableName+" SUB DIR Get KV PAIR: "+ KV_pair);
 
       atrNameList.add(key);
       typesList.add(Tuple.from(k).pack());
