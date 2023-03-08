@@ -135,7 +135,7 @@ public class TableManagerImpl implements TableManager{
     String[] atrNameList = new String[0];
     List<String> atrs = new ArrayList<>();
     AttributeType[] typesList = new AttributeType[0];
-    String[] primKeysList = new String[0];
+    List<String> primKeysList = new ArrayList<>();
 
     for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
@@ -143,7 +143,7 @@ public class TableManagerImpl implements TableManager{
       Range range = dir.range();
       //list of all kv pairs
       List<KeyValue> kvs = tx.getRange(range).asList().join();
-      //todo: name has to be attribute name, because we packed with that---???
+
       for(int k=0; k<kvs.size(); k++)
       {
         Tuple keyTuple = dir.unpack(kvs.get(k).getKey());
@@ -151,10 +151,13 @@ public class TableManagerImpl implements TableManager{
         Tuple valueTuple = Tuple.from((Object) kvs.get(k).getValue());
         System.out.println("ValueTuple: "+  valueTuple.get(1));
         boolean isPK = (boolean) valueTuple.get(0);
-        System.out.println("isPK: "+ isPK);
         AttributeType attrType = (AttributeType) valueTuple.get(1);
-        System.out.println("attrType: "+ attrType);
+        if(isPK){
+          primKeysList.add(keyTuple.get(0).toString());
+        }
+
       }
+      System.out.println("PRIMARY KEYS LIST "+ primKeysList.size());
 
 
 //      todo: change these values just need to find syntax to fetch!
