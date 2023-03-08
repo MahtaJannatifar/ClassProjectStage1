@@ -132,9 +132,8 @@ public class TableManagerImpl implements TableManager{
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
-    String[] atrNameList = new String[0];
-    List<String> atrs = new ArrayList<>();
-    AttributeType[] typesList = new AttributeType[0];
+    List<String> atrList = new ArrayList<>();
+    List<AttributeType> typesList = new ArrayList<>();
     List<String> primKeysList = new ArrayList<>();
 
     for(int i=0; i<tableList.size(); i++){
@@ -154,37 +153,37 @@ public class TableManagerImpl implements TableManager{
         //AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
         Object isPK = valueTuple.get(0);
         Object attrType = valueTuple.get(1);
+        Object atrName = keyTuple.get(0);
 
         System.out.println( isPK + " isPK");
         System.out.println( attrType + " is type");
 
         if((boolean)isPK){
 
-          primKeysList.add(keyTuple.get(0).toString());
+          primKeysList.add((String) keyTuple.get(0));
         }
+        typesList.add((AttributeType) attrType);
+        atrList.add((String) atrName);
+
 
       }
       System.out.println("PRIMARY KEYS LIST "+ primKeysList);
+      String[] primArr = new String[primKeysList.size()];
+      AttributeType[] typesArr = new AttributeType[atrList.size()];
+      String[] atrArr = new String[atrList.size()];
+      //put the prim keys in an array
+      for(int j=0; i<primKeysList.size(); i++){
+        primArr[j] = primKeysList.get(j);
+      }
+      //put the atrs and types into arrays
+      for(int z=0; z<atrList.size(); z++){
+        typesArr[z] = typesList.get(z);
+        atrArr[z] = atrList.get(z);
+      }
 
 
-//      todo: change these values just need to find syntax to fetch!
 
-//      String atrName = "";
-//      boolean isPK = true;
-//      AttributeType type = AttributeType.DOUBLE;
-
-
-      // if the entry had PK=true, add the atr name
-//      if(isPK){
-//        System.out.println("ATR name is "+atrName);
-//        primKeysList[i]= atrName;
-//      }
-//      atrs.add(atrName);
-//      for(int m=0; m<atrs.size();m++){
-//        atrNameList[m]= atrs.get(m);
-//      }
-//      typesList[i] = type;
-//      List_table.put(tableName,new TableMetadata(atrNameList,  typesList,  primKeysList));
+      List_table.put(tableName,new TableMetadata(atrArr,  typesArr,  primArr));
     }
     tx.close();
     return  List_table;
