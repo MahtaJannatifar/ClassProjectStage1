@@ -89,8 +89,6 @@ public class TableManagerImpl implements TableManager{
           }
           //commit the changes to FDB
         insertionTx.commit().join();
-//          insertionTx.close();
-//          db.close();
 
         return StatusCode.SUCCESS;
       }
@@ -118,7 +116,7 @@ public class TableManagerImpl implements TableManager{
       }
     }
 
-    txe.close();
+    txe.commit();
     return StatusCode.SUCCESS;
   }
 
