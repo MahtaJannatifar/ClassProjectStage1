@@ -87,8 +87,10 @@ public class TableManagerImpl implements TableManager{
 
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
             //it was name instead of attribute names
-            insertionTx.set(Tuple.from(name).pack(),Tuple.from(isPK,type).pack());
-            dir.pack(Tuple.from(name));
+            Tuple keyTuple = Tuple.from(name);
+            Tuple valueTuple = Tuple.from(isPK,type);
+            boolean tempPK = (boolean ) valueTuple.get(0);
+            insertionTx.set(dir.pack(keyTuple),valueTuple.pack());
           }
           //commit the changes to FDB
         insertionTx.commit().join();
@@ -129,11 +131,9 @@ public class TableManagerImpl implements TableManager{
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
-
-
     System.out.println("Table list => "+ tableList);
-     String[] atrNameList = new String[0];
-     List<String> atrs = new ArrayList<>();
+    String[] atrNameList = new String[0];
+    List<String> atrs = new ArrayList<>();
     AttributeType[] typesList = new AttributeType[0];
     String[] primKeysList = new String[0];
 
@@ -141,21 +141,29 @@ public class TableManagerImpl implements TableManager{
       String tableName = tableList.get(i);
       final DirectorySubspace dir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       Range range = dir.range();
+      //list of all kv pairs
       List<KeyValue> kvs = tx.getRange(range).asList().join();
       //todo: name has to be attribute name, because we packed with that---???
-      Subspace sb = dir.subspace(Tuple.from(tableName));
-      Tuple key = sb.unpack(Tuple.from(kvs).pack());
+      for(int k=0; k<kvs.size(); k++)
+      {
+        Tuple keyTuple = dir.unpack(kvs.get(k).getKey());
+        System.out.println("keyTuple: "+ keyTuple);
+        Tuple valueTuple = Tuple.from(kvs.get(k).getValue());
+        System.out.println("ValueTuple: "+ valueTuple);
+        boolean isPK = (boolean) valueTuple.get(0);
+        System.out.println("isPK: "+ isPK);
+        AttributeType attrType = (AttributeType) valueTuple.get(1);
+        System.out.println("attrType: "+ attrType);
+      }
 
 
 //      todo: change these values just need to find syntax to fetch!
-      System.out.println("key: "+ key);
-      String atrName = "";
-      boolean isPK = true;
-      AttributeType type = AttributeType.DOUBLE;
 
-      System.out.println(tableName+"  ATR name: "+ atrName);
-      System.out.println(tableName+"  IS PK: "+ isPK);
-      System.out.println(tableName+"  ATR type: "+ type);
+//      String atrName = "";
+//      boolean isPK = true;
+//      AttributeType type = AttributeType.DOUBLE;
+
+
       // if the entry had PK=true, add the atr name
 //      if(isPK){
 //        System.out.println("ATR name is "+atrName);
