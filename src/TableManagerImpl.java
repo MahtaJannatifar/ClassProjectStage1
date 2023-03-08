@@ -104,24 +104,22 @@ public class TableManagerImpl implements TableManager{
 
   @Override
   public StatusCode deleteTable(String tableName) {
-    FDB fdb = FDB.selectAPIVersion(710);
-    Database db = null;
-
-    try {
-      db = fdb.open();
-    } catch (Exception e) {
-      System.out.println("ERROR: the database is not successfully opened: " + e);
-    }
-    Transaction tx = db.createTransaction();
-
-    if( !DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
-      System.out.println(tableName+" Does not exist!");
-      return StatusCode.TABLE_NOT_FOUND;
-    }
-    else{
-      System.out.println("table will be deleted");
-    }
-
+//    FDB fdb = FDB.selectAPIVersion(710);
+//    Database db = null;
+//
+//    try {
+//      db = fdb.open();
+//    } catch (Exception e) {
+//      System.out.println("ERROR: the database is not successfully opened: " + e);
+//    }
+//    Transaction tx = db.createTransaction();
+//
+//
+//
+//    for(int i=0; i<listTables().size(); i++){
+//
+//    }
+//
 //    tx.close();
     return StatusCode.SUCCESS;
   }
@@ -138,7 +136,7 @@ public class TableManagerImpl implements TableManager{
     }
     Transaction tx = db.createTransaction();
     HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
-    TableMetadata tmd = new TableMetadata();
+
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
     List<String> atrList = new ArrayList<>();
@@ -158,8 +156,6 @@ public class TableManagerImpl implements TableManager{
         System.out.println("keyTuple: "+ keyTuple);
         Tuple valueTuple = dir.unpack( kvs.get(k).getValue());
         System.out.println("ValueTuple: "+  valueTuple);
-        //boolean isPK = (boolean) valueTuple.getItems().get(0);
-        //AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
         Object isPK = valueTuple.get(0);
         Object attrType = valueTuple.get(1);
         Object atrName = keyTuple.get(0);
@@ -187,7 +183,8 @@ public class TableManagerImpl implements TableManager{
         typesArr[z] = AttributeType.findByValue(String.valueOf(typesList.get(z)));
         atrArr[z] = atrList.get(z);
       }
-      List_table.put(tableName,new TableMetadata(atrArr,  typesArr,  primArr));
+      TableMetadata tmd = new TableMetadata(atrArr,  typesArr,  primArr);
+      List_table.put(tableName,tmd);
     }
     tx.close();
     return  List_table;
