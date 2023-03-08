@@ -157,14 +157,14 @@ public class TableManagerImpl implements TableManager{
 
         System.out.println( isPK + " isPK");
         System.out.println( attrType + " is type");
-//        System.out.println( TupleSecond + " tupleSecond");
-//        if(isPK){
-//
-//          primKeysList.add(keyTuple.get(0).toString());
-//        }
+
+        if((boolean)isPK){
+
+          primKeysList.add(keyTuple.get(0).toString());
+        }
 
       }
-      System.out.println("PRIMARY KEYS LIST "+ primKeysList.size());
+      System.out.println("PRIMARY KEYS LIST "+ primKeysList);
 
 
 //      todo: change these values just need to find syntax to fetch!
