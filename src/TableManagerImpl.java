@@ -89,7 +89,7 @@ public class TableManagerImpl implements TableManager{
             //it was name instead of attribute names
             Tuple keyTuple = Tuple.from(name);
             Tuple valueTuple = Tuple.from(isPK,type);
-            System.out.println("VALUE ITEMS: "+ valueTuple.getItems());
+
             insertionTx.set(dir.pack(keyTuple),dir.pack(valueTuple));
           }
           //commit the changes to FDB
@@ -152,9 +152,11 @@ public class TableManagerImpl implements TableManager{
         System.out.println("ValueTuple: "+  valueTuple);
         //boolean isPK = (boolean) valueTuple.getItems().get(0);
         //AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
-        Object TupleFirst = valueTuple.get(0);
-//        Object TupleSecond = valueTuple.get(1);
-        System.out.println( TupleFirst + " tupleFirst");
+        Object isPK = valueTuple.get(0);
+        Object attrType = valueTuple.get(1);
+
+        System.out.println( isPK + " isPK");
+        System.out.println( attrType + " is type");
 //        System.out.println( TupleSecond + " tupleSecond");
 //        if(isPK){
 //
