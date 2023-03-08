@@ -97,6 +97,7 @@ public class TableManagerImpl implements TableManager{
         insertionTx.commit().join();
           insertionTx.close();
           db.close();
+//        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
 
 
         return StatusCode.SUCCESS;
@@ -135,61 +136,60 @@ public class TableManagerImpl implements TableManager{
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
     Transaction tx = db.createTransaction();
-//    HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
+    HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
-    System.out.println("Table list => " + tableList);
+    System.out.println("Table list => "+ tableList);
     List<String> atrList = new ArrayList<>();
     List<Object> typesList = new ArrayList<>();
     List<String> primKeysList = new ArrayList<>();
 
-    HashMap<String, TableMetadata> List_table = null;
-    for (int i = 0; i < tableList.size(); i++) {
+    for(int i=0; i<tableList.size(); i++){
       String tableName = tableList.get(i);
       final DirectorySubspace dir = DirectoryLayer.getDefault().open(db, PathUtil.from(tableName)).join();
       Range range = dir.range();
       //list of all kv pairs
       List<KeyValue> kvs = tx.getRange(range).asList().join();
 
-      for (int k = 0; k < kvs.size(); k++) {
+      for(int k=0; k<kvs.size(); k++)
+      {
         Tuple keyTuple = dir.unpack(kvs.get(k).getKey());
-        System.out.println("keyTuple: " + keyTuple);
-        Tuple valueTuple = dir.unpack(kvs.get(k).getValue());
-        System.out.println("ValueTuple: " + valueTuple);
+        System.out.println("keyTuple: "+ keyTuple);
+        Tuple valueTuple = dir.unpack( kvs.get(k).getValue());
+        System.out.println("ValueTuple: "+  valueTuple);
         //boolean isPK = (boolean) valueTuple.getItems().get(0);
         //AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
         Object isPK = valueTuple.get(0);
         Object attrType = valueTuple.get(1);
         Object atrName = keyTuple.get(0);
 
-        System.out.println(isPK + " isPK");
-        System.out.println(attrType + " is type");
+        System.out.println( isPK + " isPK");
+        System.out.println( attrType + " is type");
 
-        if ((boolean) isPK) {
+        if((boolean)isPK){
 
           primKeysList.add((String) keyTuple.get(0));
         }
-        typesList.add(attrType);
+        typesList.add( attrType);
         atrList.add((String) atrName);
       }
-      System.out.println("PRIMARY KEYS LIST " + primKeysList);
+      System.out.println("PRIMARY KEYS LIST "+ primKeysList);
       String[] primArr = new String[primKeysList.size()];
       AttributeType[] typesArr = new AttributeType[atrList.size()];
       String[] atrArr = new String[atrList.size()];
       //put the prim keys in an array
-      for (int j = 0; i < primKeysList.size(); i++) {
+      for(int j=0; i<primKeysList.size(); i++){
         primArr[j] = primKeysList.get(j);
       }
       //put the atrs and types into arrays
-      for (int z = 0; z < atrList.size(); z++) {
+      for(int z=0; z<atrList.size(); z++){
         typesArr[z] = AttributeType.findByValue(String.valueOf(typesList.get(z)));
         atrArr[z] = atrList.get(z);
       }
-      List_table = null;
-      List_table.put(tableName, new TableMetadata(atrArr, typesArr, primArr));
+      List_table.put(tableName,new TableMetadata(atrArr,  typesArr,  primArr));
     }
     tx.close();
-    return List_table;
+    return  List_table;
   }
 
   @Override
