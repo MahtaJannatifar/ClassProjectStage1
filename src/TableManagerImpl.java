@@ -89,7 +89,7 @@ public class TableManagerImpl implements TableManager{
             //it was name instead of attribute names
             Tuple keyTuple = Tuple.from(name);
             Tuple valueTuple = Tuple.from(isPK,type);
-            boolean tempPK = (boolean ) valueTuple.get(0);
+            System.out.println("ADD: "+ valueTuple.getItems());
             insertionTx.set(dir.pack(keyTuple),dir.pack(valueTuple.pack()));
           }
           //commit the changes to FDB
