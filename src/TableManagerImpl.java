@@ -134,7 +134,7 @@ public class TableManagerImpl implements TableManager{
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
     List<String> atrList = new ArrayList<>();
-    List<AttributeType> typesList = new ArrayList<>();
+    List<Object> typesList = new ArrayList<>();
     List<String> primKeysList = new ArrayList<>();
 
     for(int i=0; i<tableList.size(); i++){
@@ -163,7 +163,7 @@ public class TableManagerImpl implements TableManager{
 
           primKeysList.add((String) keyTuple.get(0));
         }
-        typesList.add((AttributeType) attrType);
+        typesList.add( attrType);
         atrList.add((String) atrName);
       }
       System.out.println("PRIMARY KEYS LIST "+ primKeysList);
