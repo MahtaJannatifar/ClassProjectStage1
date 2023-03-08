@@ -90,7 +90,7 @@ public class TableManagerImpl implements TableManager{
             Tuple keyTuple = Tuple.from(name);
             Tuple valueTuple = Tuple.from(isPK,type);
             boolean tempPK = (boolean ) valueTuple.get(0);
-            insertionTx.set(dir.pack(keyTuple),valueTuple.pack());
+            insertionTx.set(dir.pack(keyTuple),dir.pack(valueTuple.pack()));
           }
           //commit the changes to FDB
         insertionTx.commit().join();
@@ -148,11 +148,14 @@ public class TableManagerImpl implements TableManager{
       {
         Tuple keyTuple = dir.unpack(kvs.get(k).getKey());
         System.out.println("keyTuple: "+ keyTuple);
-        Tuple valueTuple = Tuple.from( kvs.get(k).getValue());
+        Tuple valueTuple = dir.unpack( kvs.get(k).getValue());
         System.out.println("ValueTuple: "+  valueTuple);
         //boolean isPK = (boolean) valueTuple.getItems().get(0);
         //AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
-        System.out.println( valueTuple.get(0) + " tupleFirst");
+        Object TupleFirst = valueTuple.get(0);
+        Object TupleSecond = valueTuple.get(1);
+        System.out.println( TupleFirst + " tupleFirst");
+        System.out.println( TupleSecond + " tupleSecond");
 //        if(isPK){
 //
 //          primKeysList.add(keyTuple.get(0).toString());
