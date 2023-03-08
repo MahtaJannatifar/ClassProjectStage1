@@ -88,7 +88,7 @@ public class TableManagerImpl implements TableManager{
             //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
             //it was name instead of attribute names
             Tuple keyTuple = Tuple.from(name);
-            Tuple valueTuple = Tuple.from(isPK,type);
+            Tuple valueTuple = Tuple.from(isPK,type.toString());
 
             insertionTx.set(dir.pack(keyTuple),dir.pack(valueTuple));
 
@@ -176,7 +176,7 @@ public class TableManagerImpl implements TableManager{
       }
       //put the atrs and types into arrays
       for(int z=0; z<atrList.size(); z++){
-        typesArr[z] = typesList.get(z);
+        typesArr[z] = AttributeType.findByValue(String.valueOf(typesList.get(z)));
         atrArr[z] = atrList.get(z);
       }
 
