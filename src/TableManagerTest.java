@@ -66,7 +66,7 @@ public class TableManagerTest {
         EmployeeTableAttributeNames, EmployeeTableAttributeTypes, EmployeeTablePKAttributes));
     assertEquals(StatusCode.TABLE_NOT_FOUND, tableManager.deleteTable("department"));
     assertEquals(StatusCode.SUCCESS, tableManager.deleteTable("Employee"));
-//    todo: remove key value pairs from the metadata and uncomment for test:
+//    todo: remove key value pairs from the metadata and uncomment again
 //    HashMap<String, TableMetadata> tables = tableManager.listTables();
 //    assertTrue(tables.isEmpty());
   }

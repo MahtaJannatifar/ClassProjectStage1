@@ -1,17 +1,13 @@
 import com.apple.foundationdb.*;
-import com.apple.foundationdb.async.AsyncIterable;
 import com.apple.foundationdb.directory.DirectoryLayer;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.directory.PathUtil;
 import com.apple.foundationdb.subspace.Subspace;
 import com.apple.foundationdb.tuple.Tuple;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util. HashMap;
-
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * TableManagerImpl implements interfaces in {#TableManager}. You should put your implementation
