@@ -118,6 +118,9 @@ public class TableManagerImpl implements TableManager{
       System.out.println(tableName+" Does not exist!");
       return StatusCode.TABLE_NOT_FOUND;
     }
+    else{
+      System.out.println("table will be deleted");
+    }
 
     tx.close();
     return StatusCode.SUCCESS;
