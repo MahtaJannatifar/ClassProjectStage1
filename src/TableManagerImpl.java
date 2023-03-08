@@ -85,8 +85,6 @@ public class TableManagerImpl implements TableManager{
               isPK = true;
             }
 
-            //tuple to convert atr name to byte array: create a tuple, 1 tuple for key and 1 tuple for value
-            //it was name instead of attribute names
             Tuple keyTuple = Tuple.from(name);
             Tuple valueTuple = Tuple.from(isPK,type.toString());
 
@@ -112,15 +110,19 @@ public class TableManagerImpl implements TableManager{
     } catch (Exception e) {
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
-    Transaction tx = db.createTransaction();
-//
-//
-//
-//    for(int i=0; i<listTables().size(); i++){
-//
-//    }
-//
-//    tx.close();
+    Transaction txe = db.createTransaction();
+    //todo: IDEA to do:  go through the listTables and find the tableName, if not found return not found
+    // if found, remove the key value tuple for that tableNAme
+    for(int i=0; i<listTables().size(); i++){
+      if( DirectoryLayer.getDefault().list(txe).join().contains(tableName)) {
+        // delete key value pairs out of metadata
+      }
+      else{
+        return StatusCode.TABLE_NOT_FOUND;
+      }
+    }
+
+    txe.close();
     return StatusCode.SUCCESS;
   }
 

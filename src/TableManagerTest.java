@@ -41,7 +41,6 @@ public class TableManagerTest {
         tableManager.createTable(EmployeeTableName, EmployeeTableAttributeNames, null, EmployeeTablePKAttributes));
     assertEquals(StatusCode.TABLE_CREATION_ATTRIBUTE_INVALID,
         tableManager.createTable(EmployeeTableName, null, EmployeeTableAttributeTypes, EmployeeTablePKAttributes));
-//    todo: figure out condition for this status code:
     assertEquals(StatusCode.TABLE_CREATION_PRIMARY_KEY_NOT_FOUND,
         tableManager.createTable(EmployeeTableName, EmployeeTableAttributeNames,
             EmployeeTableAttributeTypes, new String[]{"ManagerSSN", "SSN"}));
