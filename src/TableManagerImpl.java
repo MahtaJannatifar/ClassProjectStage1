@@ -97,8 +97,6 @@ public class TableManagerImpl implements TableManager{
         insertionTx.commit().join();
           insertionTx.close();
           db.close();
-//        System.out.println("FDB items are " + DirectoryLayer.getDefault().list(insertionTx).join());
-
 
         return StatusCode.SUCCESS;
       }
@@ -106,22 +104,22 @@ public class TableManagerImpl implements TableManager{
 
   @Override
   public StatusCode deleteTable(String tableName) {
-//    FDB fdb = FDB.selectAPIVersion(710);
-//    Database db = null;
-//
-//    try {
-//      db = fdb.open();
-//    } catch (Exception e) {
-//      System.out.println("ERROR: the database is not successfully opened: " + e);
-//    }
-//    Transaction tx = db.createTransaction();
-//
-//    if( !DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
-//      System.out.println(tableName+" Does not exist!");
-//      return StatusCode.TABLE_NOT_FOUND;
-//    }
-//
-//    tx.close();
+    FDB fdb = FDB.selectAPIVersion(710);
+    Database db = null;
+
+    try {
+      db = fdb.open();
+    } catch (Exception e) {
+      System.out.println("ERROR: the database is not successfully opened: " + e);
+    }
+    Transaction tx = db.createTransaction();
+
+    if( !DirectoryLayer.getDefault().list(tx).join().contains(tableName)) {
+      System.out.println(tableName+" Does not exist!");
+      return StatusCode.TABLE_NOT_FOUND;
+    }
+
+    tx.close();
     return StatusCode.SUCCESS;
   }
 
