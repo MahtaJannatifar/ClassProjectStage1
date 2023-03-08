@@ -152,7 +152,7 @@ public class TableManagerImpl implements TableManager{
         System.out.println("ValueTuple: "+  valueTuple);
         //boolean isPK = (boolean) valueTuple.getItems().get(0);
         //AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
-        System.out.println((Boolean) valueTuple.get(0) + " tupleFirst");
+        System.out.println( valueTuple.get(0) + " tupleFirst");
 //        if(isPK){
 //
 //          primKeysList.add(keyTuple.get(0).toString());
