@@ -90,7 +90,7 @@ public class TableManagerImpl implements TableManager{
             Tuple keyTuple = Tuple.from(name);
             Tuple valueTuple = Tuple.from(isPK,type);
 
-            insertionTx.set(dir.pack(keyTuple),dir.packWithVersionstamp(valueTuple));
+            insertionTx.set(dir.pack(keyTuple),dir.pack(valueTuple));
 
           }
           //commit the changes to FDB
