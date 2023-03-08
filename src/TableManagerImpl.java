@@ -121,7 +121,7 @@ public class TableManagerImpl implements TableManager{
 //    }
 //
 //    tx.close();
-    return StatusCode.SUCCESS;
+    return StatusCode.TABLE_NOT_FOUND;
   }
 
   @Override
