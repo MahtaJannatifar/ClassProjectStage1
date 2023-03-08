@@ -152,7 +152,7 @@ public class TableManagerImpl implements TableManager{
         System.out.println("ValueTuple: "+  valueTuple);
         //boolean isPK = (boolean) valueTuple.getItems().get(0);
         //AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
-        Object TupleFirst = (boolean)valueTuple.get(0);
+        Object TupleFirst = valueTuple.get(0);
 //        Object TupleSecond = valueTuple.get(1);
         System.out.println( TupleFirst + " tupleFirst");
 //        System.out.println( TupleSecond + " tupleSecond");
