@@ -136,7 +136,7 @@ public class TableManagerImpl implements TableManager{
       System.out.println("ERROR: the database is not successfully opened: " + e);
     }
     Transaction tx = db.createTransaction();
-    HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
+//    HashMap<String,TableMetadata> List_table = new HashMap <String,TableMetadata>();
     TableMetadata tmd = new TableMetadata();
     List<String> tableList = DirectoryLayer.getDefault().list(tx).join();
     System.out.println("Table list => "+ tableList);
@@ -186,9 +186,7 @@ public class TableManagerImpl implements TableManager{
         typesArr[z] = AttributeType.findByValue(String.valueOf(typesList.get(z)));
         atrArr[z] = atrList.get(z);
       }
-
-
-
+      HashMap<String,TableMetadata> List_table = null;
       List_table.put(tableName,new TableMetadata(atrArr,  typesArr,  primArr));
     }
     tx.close();
