@@ -77,7 +77,7 @@ public class TableManagerImpl implements TableManager{
           boolean isPK = false;
           for (int i=0; i< attributeNames.length; i++) {
             String name = attributeNames[i];
-            String type = attributeType[i].toString();
+            AttributeType type = attributeType[i];
 
             //if attribute name is inside primary key attribute name, it's a PK
             if (Arrays.asList(primaryKeyAttributeNames).contains(name)){
@@ -164,8 +164,6 @@ public class TableManagerImpl implements TableManager{
         }
         typesList.add((AttributeType) attrType);
         atrList.add((String) atrName);
-
-
       }
       System.out.println("PRIMARY KEYS LIST "+ primKeysList);
       String[] primArr = new String[primKeysList.size()];
