@@ -185,6 +185,7 @@ public class TableManagerImpl implements TableManager{
       }
       TableMetadata tmd = new TableMetadata(atrArr,  typesArr,  primArr);
       List_table.put(tableName,tmd);
+      System.out.println(List_table);
     }
     tx.close();
     return  List_table;
