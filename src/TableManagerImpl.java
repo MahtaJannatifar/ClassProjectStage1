@@ -91,6 +91,7 @@ public class TableManagerImpl implements TableManager{
             Tuple valueTuple = Tuple.from(isPK,type);
 
             insertionTx.set(dir.pack(keyTuple),dir.pack(valueTuple));
+
           }
           //commit the changes to FDB
         insertionTx.commit().join();
