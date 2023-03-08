@@ -153,7 +153,7 @@ public class TableManagerImpl implements TableManager{
         boolean isPK = (boolean) valueTuple.getItems().get(0);
         AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
         if(isPK){
-          System.out.println(isPK + " and "+  attrType);
+          System.out.println(valueTuple.getItems().get(0) + " and "+  valueTuple.getItems().get(1));
           primKeysList.add(keyTuple.get(0).toString());
         }
 
