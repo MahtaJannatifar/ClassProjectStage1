@@ -104,15 +104,15 @@ public class TableManagerImpl implements TableManager{
 
   @Override
   public StatusCode deleteTable(String tableName) {
-//    FDB fdb = FDB.selectAPIVersion(710);
-//    Database db = null;
-//
-//    try {
-//      db = fdb.open();
-//    } catch (Exception e) {
-//      System.out.println("ERROR: the database is not successfully opened: " + e);
-//    }
-//    Transaction tx = db.createTransaction();
+    FDB fdb = FDB.selectAPIVersion(710);
+    Database db = null;
+
+    try {
+      db = fdb.open();
+    } catch (Exception e) {
+      System.out.println("ERROR: the database is not successfully opened: " + e);
+    }
+    Transaction tx = db.createTransaction();
 //
 //
 //
@@ -121,7 +121,7 @@ public class TableManagerImpl implements TableManager{
 //    }
 //
 //    tx.close();
-    return StatusCode.TABLE_NOT_FOUND;
+    return StatusCode.SUCCESS;
   }
 
   @Override
