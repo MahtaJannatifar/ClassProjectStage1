@@ -144,16 +144,15 @@ public class TableManagerImpl implements TableManager{
       //list of all kv pairs
       List<KeyValue> kvs = tx.getRange(range).asList().join();
       //todo: name has to be attribute name, because we packed with that---???
-      for(int k=0; k<kvs.size(); k++)
-      {
-        Tuple keyTuple = dir.unpack(kvs.get(k).getKey());
-        System.out.println("keyTuple: "+ keyTuple);
-        Tuple valueTuple = Tuple.from((Object) kvs.get(k).getValue());
-        System.out.println("ValueTuple: "+ (boolean) valueTuple.get(0));
+      for (KeyValue kv : kvs) {
+        Tuple keyTuple = dir.unpack(kv.getKey());
+        System.out.println("keyTuple: " + keyTuple);
+        Tuple valueTuple = Tuple.from((Object) kv.getValue());
+        System.out.println("ValueTuple: " + valueTuple);
         boolean isPK = (boolean) valueTuple.get(0);
-        System.out.println("isPK: "+ isPK);
+        System.out.println("isPK: " + isPK);
         AttributeType attrType = (AttributeType) valueTuple.get(1);
-        System.out.println("attrType: "+ attrType);
+        System.out.println("attrType: " + attrType);
       }
 
 
