@@ -122,7 +122,7 @@ public class TableManagerImpl implements TableManager{
       System.out.println("table will be deleted");
     }
 
-    tx.close();
+//    tx.close();
     return StatusCode.SUCCESS;
   }
 
