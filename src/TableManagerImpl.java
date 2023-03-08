@@ -185,7 +185,7 @@ public class TableManagerImpl implements TableManager{
       List_table.put(tableName,tmd);
       System.out.println(List_table);
     }
-    tx.close();
+    tx.commit();
     return  List_table;
   }
 

@@ -52,7 +52,7 @@ public class TableManagerTest {
     assertEquals(1, tables.size());
 //todo: add employee to metadata:
 
-//    assertEquals(EmployeeTable, tables.get(EmployeeTableName));
+    assertEquals(EmployeeTable, tables.get(EmployeeTableName));
   }
 
   /**
