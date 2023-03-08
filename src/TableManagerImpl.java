@@ -115,7 +115,7 @@ public class TableManagerImpl implements TableManager{
     // if found, remove the key value tuple for that tableNAme
     for(int i=0; i<listTables().size(); i++){
       if( DirectoryLayer.getDefault().list(txe).join().contains(tableName)) {
-        // delete key value pairs out of metadata
+        // delete key value pairs out of metadata: need to be implemented
       }
       else{
         return StatusCode.TABLE_NOT_FOUND;
@@ -196,12 +196,16 @@ public class TableManagerImpl implements TableManager{
   @Override
   public StatusCode addAttribute(String tableName, String attributeName, AttributeType attributeType) {
     // your code
+    // todo idea: just create a tuple from table name, data type and if it is pk
+    //  then insert that attribute inside that tableName given in prototype
     return StatusCode.SUCCESS;
   }
 
   @Override
   public StatusCode dropAttribute(String tableName, String attributeName) {
     // your code
+    // todo idea: find the attribute using attribute name in the table named tableName
+    //  and remove its tuple from the metadata
     return StatusCode.SUCCESS;
   }
 

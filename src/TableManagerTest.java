@@ -50,6 +50,7 @@ public class TableManagerTest {
 
     HashMap<String, TableMetadata> tables = tableManager.listTables();
     assertEquals(1, tables.size());
+//todo: add employee to metadata:
 
 //    assertEquals(EmployeeTable, tables.get(EmployeeTableName));
   }
@@ -65,6 +66,7 @@ public class TableManagerTest {
         EmployeeTableAttributeNames, EmployeeTableAttributeTypes, EmployeeTablePKAttributes));
     assertEquals(StatusCode.TABLE_NOT_FOUND, tableManager.deleteTable("department"));
     assertEquals(StatusCode.SUCCESS, tableManager.deleteTable("Employee"));
+//    todo: remove key value pairs from the metadata and uncomment for test:
 //    HashMap<String, TableMetadata> tables = tableManager.listTables();
 //    assertTrue(tables.isEmpty());
   }
