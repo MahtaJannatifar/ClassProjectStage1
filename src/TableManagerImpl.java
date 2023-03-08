@@ -149,7 +149,7 @@ public class TableManagerImpl implements TableManager{
         Tuple keyTuple = dir.unpack(kvs.get(k).getKey());
         System.out.println("keyTuple: "+ keyTuple);
         Tuple valueTuple = Tuple.from((Object) kvs.get(k).getValue());
-        System.out.println("ValueTuple: "+  valueTuple);
+        System.out.println("ValueTuple: "+  valueTuple.size());
         boolean isPK = (boolean) valueTuple.getItems().get(0);
         AttributeType attrType = (AttributeType) valueTuple.getItems().get(1);
         System.out.println(valueTuple.getItems().get(0) + " and "+  valueTuple.getItems().get(1));
